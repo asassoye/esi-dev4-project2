@@ -20,50 +20,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-/**
- * @file cardtype.hpp
- */
-#ifndef COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_
-#define COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_
+#include "card.hpp"
 
-namespace cpoker::model::cards {
-/**
- * @brief CardType enum
- */
-enum CardType {
-  /**
-   * @brief Chauve-souris
-   */
-  BAT,
-  /**
-   * @brief Mouche
-   */
-  FLY,
-  /**
-   * @brief Cafard
-   */
-  COCKROACH,
-  /**
-   * @brief Crapaud
-   */
-  TOAD,
-  /**
-   * @brief Rat
-   */
-  RAT,
-  /**
-   * @brief Scorpion
-   */
-  SCORPION,
-  /**
-   * @brief Araignée
-   */
-  SPIDER,
-  /**
-   * @brief Punaise
-   */
-  STINKBUG
-};
-}
-
-#endif //COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_

@@ -20,26 +20,66 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/**
+ * @file card.hpp
+ */
 #ifndef COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_
 #define COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_
 
 #include "cardtype.hpp"
+#include <string_view>
 
 namespace cpoker::model::cards {
+/**
+ * @brief Card class
+ */
 class Card {
  protected:
-  const CardType type_;
+  /**
+   * @brief Type of the card
+   */
+  CardType type_;
 
  public:
+  /**
+   * @brief Card constructor by CardType
+   *
+   * @param card_type Type of the card
+   */
   constexpr explicit inline Card(CardType) noexcept;
 
-  constexpr explicit inline Card(Card &&) noexcept;
+  /**
+   * @brief Card constructor by lvalue reference
+   *
+   * @param card Initial card
+   */
+  constexpr inline Card(Card &&) noexcept;
 
-  constexpr explicit inline Card(const Card &) noexcept;
+  /**
+   * @brief Card constructor by copy
+   */
+  constexpr inline Card(const Card &) noexcept;
 
+  /**
+   * @brief type_ getter
+   *
+   * @return Type of the card
+   */
   constexpr inline CardType type() noexcept;
 
+  /**
+   * @brief name of the card type
+   *
+   * @return Name of the Card
+   */
   constexpr inline std::string_view name() noexcept;
+
+  /**
+   * @brief re-affectation operator
+   *
+   * @return new reference
+   */
+  Card &operator=(const Card &);
 
   friend bool operator==(const Card &, const Card &);
 };
@@ -47,14 +87,59 @@ class Card {
 // ***********************************************************************
 // --- FORWARD DECLARATIONS
 // ***********************************************************************
+/**
+ * @brief Compares two cards
+ *
+ * @return true if cards are identical
+ * @return false if cards are different
+ */
 inline bool operator==(const Card &, const Card &);
 
+/**
+ * @brief Compares two cards
+ *
+ * @return false if cards are identical
+ * @return true if cards are different
+ */
 inline bool operator!=(const Card &, const Card &);
 
 // ***********************************************************************
 // --- INLINE DEFINITION
 // **********************************************************************
 
+constexpr Card::Card(CardType card_type) noexcept : type_{card_type} {}
+
+constexpr Card::Card(Card && card) noexcept : type_{card.type_} {}
+
+constexpr Card::Card(const Card & card) noexcept = default;
+
+constexpr CardType Card::type() noexcept {
+  return type_;
+}
+
+constexpr std::string_view Card::name() noexcept {
+  switch (type_) {
+    case BAT:return "BAT";
+    case FLY:return "FLY";
+    case TOAD:return "TOAD";
+    case RAT:return "RAT";
+    case SCORPION:return "SCORPION";
+    case SPIDER:return "SPIDER";
+    case STINKBUG:return "STINKBUG";
+    case COCKROACH:
+    default:return "COCKROACH";
+  }
+}
+
+Card &Card::operator=(const Card &card) = default;
+
+bool operator==(const Card &a, const Card &b) {
+  return a.type_ == b.type_;
+}
+
+bool operator!=(const Card &a, const Card &b){
+  return !(a == b);
+}
 }
 
 #endif //COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_

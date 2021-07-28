@@ -79,7 +79,7 @@ class Card {
    *
    * @return new reference
    */
-  Card &operator=(const Card &);
+  Card &operator=(const Card &) = default;
 
   friend bool operator==(const Card &, const Card &);
 };
@@ -130,8 +130,6 @@ constexpr std::string_view Card::name() noexcept {
     default:return "COCKROACH";
   }
 }
-
-Card &Card::operator=(const Card &card) = default;
 
 bool operator==(const Card &a, const Card &b) {
   return a.type_ == b.type_;

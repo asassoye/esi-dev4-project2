@@ -20,23 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
-#define COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+#include "catch2/catch.hpp"
+#include "model/game/player.hpp"
 
-#include <model/cards/cardcollection.hpp>
+using namespace cpoker::model;
 
-namespace cpoker::model::cards {
-class Deck : CardCollection {
- protected:
-  std::default_random_engine re_{static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())};
- public:
-  Deck() noexcept(false);
+TEST_CASE("class Player") {
+  SECTION("Constructors") {
+    SECTION("Player(std::string_view &&name, unsigned age)") {
+      SECTION("OK") {
+        std::string_view name = "Andrew";
+        unsigned age = 25;
 
-  Deck(std::map<CardType, unsigned int> &) noexcept(false);
+        game::Player player = game::Player{name, age};
 
-  void shuffel() noexcept;
+        REQUIRE(player.name() == name);
+        REQUIRE(player.age() == age);
+      }
 
-};
+      SECTION("Too young") {
+        std::string_view name = "Andrew";
+        unsigned age = 7;
+
+        REQUIRE_THROWS(game::Player{name, age});
+      }
+    }
+  }
+
+  SECTION("Methods") {
+    SECTION("void Player::name(std::string_view &&new_name)") {
+      std::string newName = "Albert";
+      game::Player player = game::Player{"Andrew", 22};
+
+      player.name(newName);
+      REQUIRE(player.name() == newName);
+    }
+
+    SECTION("void Player::age(unsigned int new_age)") {
+      unsigned newAge = 15;
+      game::Player player = game::Player{"Andrew", 22};
+
+      player.age(newAge);
+      REQUIRE(player.age() == newAge);
+    }
+  }
 }
 
-#endif //COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_

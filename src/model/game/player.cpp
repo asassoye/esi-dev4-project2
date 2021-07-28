@@ -20,23 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
-#define COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+//
+// Created by asassoye on 28/07/21.
+//
 
-#include <model/cards/cardcollection.hpp>
+#include <stdexcept>
+#include "player.hpp"
 
-namespace cpoker::model::cards {
-class Deck : CardCollection {
- protected:
-  std::default_random_engine re_{static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())};
- public:
-  Deck() noexcept(false);
+namespace cpoker::model::game {
 
-  Deck(std::map<CardType, unsigned int> &) noexcept(false);
-
-  void shuffel() noexcept;
-
-};
+Player::Player(std::string_view name, unsigned int age) noexcept(false): name_(name), age_(age) {
+  if (age < MIN_AGE) {
+    throw std::invalid_argument("You are too young..");
+  }
 }
 
-#endif //COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+std::string_view &Player::name() noexcept {
+  return name_;
+}
+
+void Player::name(std::string_view &&new_name) noexcept {
+  name_ = new_name;
+}
+
+unsigned Player::age() const noexcept {
+  return age_;
+}
+
+void Player::age(unsigned int new_age) noexcept {
+  age_ = new_age;
+}
+
+void Player::add(const cards::Card &card) {
+  hand_.add(card);
+}
+
+cards::Card Player::withdraw(unsigned int index) {
+  return hand_.withdraw(index);
+}
+}

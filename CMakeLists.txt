@@ -50,13 +50,13 @@ include(CTest)
 set(
         CARD_SOURCES
         src/model/cards/card.cpp
-        src/model/cards/deck.cpp
-)
+        src/model/cards/cardcollection.cpp
+        src/model/cards/deck.cpp)
 
 set(
         CARD_TEST_SOURCES
         test/model/cards/cardtest.cpp
-        test/model/cards/decktest.cpp
+        test/model/cards/cardcollectiontest.cpp
 )
 
 
@@ -73,6 +73,37 @@ add_executable(
 
 target_link_libraries(card_tests Catch2 CARD_LIB)
 add_test(NAME CardTests COMMAND card_tests)
+
+#########################################################################################
+# GAME LIBRARY
+#########################################################################################
+set(
+        GAME_SOURCES
+        src/model/game/player.cpp
+)
+
+set(
+        GAME_TEST_SOURCES
+        test/model/game/playertest.cpp
+)
+
+
+add_library(
+        GAME_LIB
+        ${GAME_SOURCES}
+)
+
+target_link_libraries(GAME_LIB CARD_LIB)
+
+add_executable(
+        game_tests
+        ${TEST_MAIN}
+        ${GAME_TEST_SOURCES}
+)
+
+target_link_libraries(game_tests Catch2 GAME_LIB)
+add_test(NAME GameTests COMMAND game_tests)
+
 
 #########################################################################################
 # EXECUTABLES

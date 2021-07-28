@@ -20,77 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+//
+// Created by asassoye on 28/07/21.
+//
 
-/**
- * @file deck.cpp
- */
-#include <stdexcept>
-#include <random>
 #include <algorithm>
 #include <chrono>
 #include "deck.hpp"
 
 namespace cpoker::model::cards {
+Deck::Deck() noexcept(false)
+    : CardCollection{} {}
 
-Deck::Deck() noexcept(false):
-    cards_{},
-    re_{static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())} {}
-
-Deck::Deck(std::map<CardType, unsigned int> &cards) noexcept(false): Deck() {
-  add(cards);
-}
-
-bool Deck::empty() noexcept {
-  return cards_.empty();
-}
-
-bool Deck::has(CardType type) noexcept {
-  for (auto &card : cards_) {
-    if (card.type() == type)
-      return true;
-  }
-
-  return false;
-}
-
-unsigned Deck::count(CardType type) noexcept {
-  unsigned count = 0;
-
-  for (auto &card: cards_) {
-    if (card.type() == type)
-      ++count;
-  }
-  return count;
-}
-
-Card Deck::pop() noexcept(false) {
-  if (empty()) {
-    throw std::out_of_range("Deck is empty. Impossible to pop a Card.");
-  }
-
-  auto card = cards_.back();
-  cards_.pop_back();
-
-  return card;
-}
+Deck::Deck(std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection{cards} {}
 
 void Deck::shuffel() noexcept {
   std::shuffle(cards_.begin(), cards_.end(), re_);
-}
-
-void Deck::add(CardType type) noexcept(false) {
-  cards_.emplace_back(Card{type});
-}
-
-void Deck::add(const std::map<CardType, unsigned int> &cards) noexcept(false) {
-  for (auto &card : cards) {
-    for (unsigned i = 0; i < card.second; ++i) {
-      add(card.first);
-    }
-  }
-}
-
-void Deck::clear() noexcept {
-  cards_.clear();
 }
 }

@@ -23,11 +23,11 @@
 #include <map>
 #include "catch2/catch.hpp"
 #include "model/cards/card.hpp"
-#include "model/cards/deck.hpp"
+#include "model/cards/cardcollection.hpp"
 
 using namespace cpoker::model::cards;
 
-TEST_CASE("class Deck") {
+TEST_CASE("class CardCollection") {
   std::map<CardType, unsigned int> basicDeck = {{BAT, 8},
                                                 {FLY, 8},
                                                 {COCKROACH, 8},
@@ -38,13 +38,13 @@ TEST_CASE("class Deck") {
                                                 {STINKBUG, 8}};
 
   SECTION("constructor") {
-    SECTION("Deck()") {
-      auto deck = Deck();
+    SECTION("CardCollection()") {
+      auto deck = CardCollection();
       CHECK(deck.empty() == true);
     }
 
-    SECTION("Deck(std::map<CardType, unsigned int> &)") {
-      auto deck = Deck(basicDeck);
+    SECTION("CardCollection(std::map<CardType, unsigned int> &)") {
+      auto deck = CardCollection(basicDeck);
 
       for (auto &e: basicDeck) {
         CHECK(deck.count(e.first) == e.second);
@@ -52,8 +52,8 @@ TEST_CASE("class Deck") {
     }
   }
 
-  SECTION("void Deck::add(CardType type)") {
-    auto deck = Deck();
+  SECTION("void CardCollection::add(CardType type)") {
+    auto deck = CardCollection();
     for (auto &e: basicDeck) {
       SECTION("CardType: " + std::to_string(e.first)) {
         deck.add(e.first);
@@ -63,8 +63,8 @@ TEST_CASE("class Deck") {
     }
   }
 
-  SECTION("Card Deck::pop()") {
-    auto deck = Deck();
+  SECTION("Card CardCollection::pop()") {
+    auto deck = CardCollection();
     for (auto &e: basicDeck) {
       SECTION("CardType: " + std::to_string(e.first)) {
         deck.add(e.first);

@@ -20,23 +20,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
-#define COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+#ifndef COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
+#define COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
 
-#include <model/cards/cardcollection.hpp>
+#include <vector>
+#include <array>
+#include <map>
+#include <random>
+#include "model/cards/card.hpp"
 
 namespace cpoker::model::cards {
-class Deck : CardCollection {
+/**
+ * @brief CardCollection class
+ */
+class CardCollection {
  protected:
-  std::default_random_engine re_{static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())};
+  std::vector<Card> cards_;
+
  public:
-  Deck() noexcept(false);
+  CardCollection() noexcept(false);
 
-  Deck(std::map<CardType, unsigned int> &) noexcept(false);
+  explicit CardCollection(std::map<CardType, unsigned int> &) noexcept(false);
 
-  void shuffel() noexcept;
+  bool empty() noexcept;
 
+  bool has(CardType) noexcept;
+
+  bool has(const Card &) noexcept;
+
+  unsigned count(CardType) noexcept;
+
+  Card pop() noexcept(false);
+
+  Card withdraw(unsigned index);
+
+  void add(CardType) noexcept(false);
+
+  void add(const Card &) noexcept(false);
+
+  void add(const std::map<CardType, unsigned int> &) noexcept(false);
+
+  void clear() noexcept;
 };
 }
-
-#endif //COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+#endif //COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_

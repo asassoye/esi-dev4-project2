@@ -49,11 +49,15 @@ include(CTest)
 #########################################################################################
 set(
         CARD_SOURCES
-        src/model/cards/card.cpp)
+        src/model/cards/card.cpp
+        src/model/cards/deck.cpp
+)
 
 set(
         CARD_TEST_SOURCES
-        test/model/cards/cardtest.cpp)
+        test/model/cards/cardtest.cpp
+        test/model/cards/decktest.cpp
+)
 
 
 add_library(
@@ -73,7 +77,7 @@ add_test(NAME CardTests COMMAND card_tests)
 #########################################################################################
 # EXECUTABLES
 #########################################################################################
-add_executable(${PROJECT_NAME} src/main.cpp src/model/cards/card.hpp src/model/cards/card.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp)
 
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} CARD_LIB)

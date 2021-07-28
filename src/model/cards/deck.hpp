@@ -20,16 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
+//
+// Created by Andrew Sassoye on 14/07/2021.
+//
+
+#ifndef COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+#define COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+
+#include <vector>
+#include <array>
+#include <map>
+#include <random>
 #include "model/cards/card.hpp"
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
-  QLabel label{"Hello world!"};
-  label.show();
+namespace cpoker::model::cards {
+/**
+ * @brief Deck class
+ */
+class Deck {
+ protected:
+  std::vector<Card> cards_;
 
-  cpoker::model::cards::Card card = cpoker::model::cards::Card{cpoker::model::cards::FLY};
+  std::default_random_engine re_;
 
-  return app.exec();
+ public:
+  Deck() noexcept(false);
+
+  Deck(std::map<CardType, unsigned int> &) noexcept(false);
+
+  bool empty() noexcept;
+
+  bool has(CardType) noexcept;
+
+  unsigned count(CardType) noexcept;
+
+  Card pop() noexcept(false);
+
+  void shuffel() noexcept;
+
+  void add(CardType) noexcept(false);
+
+  void add(const std::map<CardType, unsigned int> &) noexcept(false);
+
+  void clear() noexcept;
+};
 }
+#endif //COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_

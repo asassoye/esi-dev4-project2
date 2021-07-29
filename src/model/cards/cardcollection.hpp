@@ -40,7 +40,7 @@ class CardCollection {
  public:
   CardCollection() noexcept(false);
 
-  explicit CardCollection(std::map<CardType, unsigned int> &) noexcept(false);
+  explicit CardCollection(const std::map<CardType, unsigned int> &) noexcept(false);
 
   bool empty() noexcept;
 

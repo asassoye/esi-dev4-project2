@@ -55,10 +55,15 @@ class Player {
 
   void age(unsigned new_age) noexcept;
 
-  void add(const cards::Card &card);
+  void addHand(const cards::Card &card);
+
+  bool hasCardsLeft() noexcept;
+
+  void addTable(const cards::Card &card);
+
+  unsigned countTable(cards::CardType type);
 
   cards::Card withdraw(unsigned index);
-
 };
 }
 

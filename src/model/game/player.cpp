@@ -20,10 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//
-// Created by asassoye on 28/07/21.
-//
-
 #include <stdexcept>
 #include "player.hpp"
 
@@ -51,8 +47,20 @@ void Player::age(unsigned int new_age) noexcept {
   age_ = new_age;
 }
 
-void Player::add(const cards::Card &card) {
+void Player::addHand(const cards::Card &card) {
   hand_.add(card);
+}
+
+bool Player::hasCardsLeft() noexcept {
+  return !hand_.empty();
+}
+
+void Player::addTable(const cards::Card &card) {
+  table_.add(card);
+}
+
+unsigned Player::countTable(cards::CardType type) {
+  return table_.count(type);
 }
 
 cards::Card Player::withdraw(unsigned int index) {

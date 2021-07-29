@@ -20,20 +20,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//
-// Created by asassoye on 28/07/21.
-//
+#ifndef COCKROACH_POKER_SRC_MODEL_GAME_ROUND_HPP_
+#define COCKROACH_POKER_SRC_MODEL_GAME_ROUND_HPP_
 
-#include <algorithm>
-#include "deck.hpp"
+#include <optional>
+#include "model/game/rountstatus.hpp"
+#include "model/game/player.hpp"
+#include "model/cards//card.hpp"
 
-namespace cpoker::model::cards {
-Deck::Deck() noexcept(false)
-    : CardCollection{} {}
+namespace cpoker::model::game {
+class Round {
+ protected:
+  RoundStatus status_;
 
-Deck::Deck(const std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection{cards} {}
+  Player *sender_;
 
-void Deck::shuffel() noexcept {
-  std::shuffle(cards_.begin(), cards_.end(), re_);
+  Player *receiver_;
+
+  std::optional<cards::Card> card_;
+
+  std::optional<cards::Card> value_;
+
+  void next(Player &nextSender, const std::optional<cards::Card> &card = std::optional<cards::Card>()) noexcept(false);
+
+ public:
+  Round();
+
+  void start(Player &firstPlayer) noexcept(false);
+
+  void reset() noexcept;
+
+  void chooseCard(Player &sender, const cards::Card &card);
+
+  void chooseValue(Player &sender, const cards::Card &card);
+
+  void chooseReceiver(Player &sender, Player &receiver) noexcept(false);
+
+  void accept(Player &receiver, bool guess);
+
+  void transfer(Player &receiver);
+
+  Player &looser() noexcept(false);
+
+};
 }
-}
+
+#endif //COCKROACH_POKER_SRC_MODEL_GAME_ROUND_HPP_

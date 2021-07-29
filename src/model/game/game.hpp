@@ -20,20 +20,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//
-// Created by asassoye on 28/07/21.
-//
 
-#include <algorithm>
-#include "deck.hpp"
 
-namespace cpoker::model::cards {
-Deck::Deck() noexcept(false)
-    : CardCollection{} {}
+#ifndef COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_
+#define COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_
 
-Deck::Deck(const std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection{cards} {}
+#include <vector>
+#include "model/cards/deck.hpp"
+#include "model/game/gamestatus.hpp"
+#include "model/game/player.hpp"
+#include "model/game/round.hpp"
 
-void Deck::shuffel() noexcept {
-  std::shuffle(cards_.begin(), cards_.end(), re_);
+namespace cpoker::model::game {
+class Game {
+ protected:
+
+  GameStatus status_;
+
+  std::vector<Player> players_;
+
+  Round round_;
+
+  Player &youngestPlayer() noexcept(false);
+
+ public:
+  static constexpr unsigned MIN_PLAYERS = 2;
+  static constexpr unsigned MAX_PLAYERS = 6;
+  static const std::map<cards::CardType, unsigned int> basicDeckMap;
+  Game();
+
+  void addPlayer(const std::string_view &name, unsigned age);
+
+  void removePlayer(unsigned index) noexcept(false);
+
+  void distributeCards() noexcept(false);
+
+  void start() noexcept(false);
+
+};
 }
-}
+#endif //COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_

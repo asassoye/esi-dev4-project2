@@ -20,20 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//
-// Created by asassoye on 28/07/21.
-//
+#ifndef COCKROACH_POKER_SRC_MODEL_MODEL_HPP_
+#define COCKROACH_POKER_SRC_MODEL_MODEL_HPP_
 
-#include <algorithm>
-#include "deck.hpp"
+#include "model/game/game.hpp"
 
-namespace cpoker::model::cards {
-Deck::Deck() noexcept(false)
-    : CardCollection{} {}
+namespace cpoker::model {
+class Model : public game::Game {
 
-Deck::Deck(const std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection{cards} {}
-
-void Deck::shuffel() noexcept {
-  std::shuffle(cards_.begin(), cards_.end(), re_);
+};
 }
-}
+
+#endif //COCKROACH_POKER_SRC_MODEL_MODEL_HPP_

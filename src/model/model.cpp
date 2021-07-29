@@ -20,20 +20,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//
-// Created by asassoye on 28/07/21.
-//
-
-#include <algorithm>
-#include "deck.hpp"
-
-namespace cpoker::model::cards {
-Deck::Deck() noexcept(false)
-    : CardCollection{} {}
-
-Deck::Deck(const std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection{cards} {}
-
-void Deck::shuffel() noexcept {
-  std::shuffle(cards_.begin(), cards_.end(), re_);
-}
-}
+#include "model.hpp"

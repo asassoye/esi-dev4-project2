@@ -52,7 +52,7 @@ TEST_CASE("class CardCollection") {
     }
   }
 
-  SECTION("void CardCollection::add(CardType type)") {
+  SECTION("void CardCollection::addHand(CardType type)") {
     auto deck = CardCollection();
     for (auto &e: basicDeck) {
       SECTION("CardType: " + std::to_string(e.first)) {

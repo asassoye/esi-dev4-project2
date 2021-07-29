@@ -51,7 +51,9 @@ set(
         CARD_SOURCES
         src/model/cards/card.cpp
         src/model/cards/cardcollection.cpp
-        src/model/cards/deck.cpp)
+        src/model/cards/deck.cpp
+        src/model/model.cpp
+)
 
 set(
         CARD_TEST_SOURCES
@@ -80,13 +82,14 @@ add_test(NAME CardTests COMMAND card_tests)
 set(
         GAME_SOURCES
         src/model/game/player.cpp
+        src/model/game/game.cpp
+        src/model/game/round.cpp
 )
 
 set(
         GAME_TEST_SOURCES
         test/model/game/playertest.cpp
 )
-
 
 add_library(
         GAME_LIB
@@ -106,9 +109,25 @@ add_test(NAME GameTests COMMAND game_tests)
 
 
 #########################################################################################
+# MODEL LIBRARY
+#########################################################################################
+set(
+        MODEL_SOURCES
+        src/model/model.cpp
+)
+
+
+add_library(
+        MODEL_LIB
+        ${MODEL_SOURCES}
+)
+
+target_link_libraries(MODEL_LIB GAME_LIB)
+
+#########################################################################################
 # EXECUTABLES
 #########################################################################################
 add_executable(${PROJECT_NAME} src/main.cpp)
 
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} CARD_LIB)
+target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} MODEL_LIB)

@@ -35,7 +35,7 @@ namespace cpoker::model::cards {
 CardCollection::CardCollection() noexcept(false):
     cards_{} {}
 
-CardCollection::CardCollection(std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection() {
+CardCollection::CardCollection(const std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection() {
   add(cards);
 }
 

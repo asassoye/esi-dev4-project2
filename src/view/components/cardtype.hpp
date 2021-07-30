@@ -20,17 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
-#include "model/model.hpp"
-#include "view//view.hpp"
+/**
+ * @file cardtype.hpp
+ */
+#ifndef COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_
+#define COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
-
-  cpoker::model::Model model{};
-  cpoker::view::View view{};
-  view.show();
-
-  return app.exec();
+namespace cpoker::view::components {
+/**
+ * @brief CardType enum
+ */
+enum CardType {
+  /**
+   * @brief Chauve-souris
+   */
+  BAT,
+  /**
+   * @brief Mouche
+   */
+  FLY,
+  /**
+   * @brief Cafard
+   */
+  COCKROACH,
+  /**
+   * @brief Crapaud
+   */
+  TOAD,
+  /**
+   * @brief Rat
+   */
+  RAT,
+  /**
+   * @brief Scorpion
+   */
+  SCORPION,
+  /**
+   * @brief Araignée
+   */
+  SPIDER,
+  /**
+   * @brief Punaise
+   */
+  STINKBUG
+};
 }
+
+#endif //COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_

@@ -20,17 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
-#include "model/model.hpp"
-#include "view//view.hpp"
+#ifndef COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
+#define COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
+#include <QMainWindow>
+#include "view/components/card.hpp"
+#include "view/components/cardhcollection.hpp"
 
-  cpoker::model::Model model{};
-  cpoker::view::View view{};
-  view.show();
+namespace cpoker::view {
+class View : public QMainWindow {
+ Q_OBJECT
+ private:
+  components::CardHCollection *cards_;
 
-  return app.exec();
+ public:
+  View();
+  ~View();
+};
 }
+#endif //COCKROACH_POKER_SRC_VIEW_VIEW_HPP_

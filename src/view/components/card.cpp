@@ -20,17 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
-#include "model/model.hpp"
-#include "view//view.hpp"
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
+#include <QFile>
+#include "card.hpp"
 
-  cpoker::model::Model model{};
-  cpoker::view::View view{};
-  view.show();
+namespace cpoker::view::components {
 
-  return app.exec();
+Card::Card(CardType type, QWidget *parent) : QPushButton(parent), type_{type} {
+  QFile cssFile{":/css/card.css"};
+  cssFile.open(QFile::ReadOnly);
+  QString css = QLatin1String(cssFile.readAll());
+
+  setStyleSheet(css);
+  auto policy = this->sizePolicy();
+  policy.setHeightForWidth(true);
+  setSizePolicy(policy);
+
+}
+
+QSize Card::sizeHint() const {
+  return QSize{28, 43};
+}
+
+QString Card::className() {
+  switch (type_) {
+    case BAT:return "bat";
+    case FLY:return "fly";
+    case TOAD:return "toad";
+    case RAT:return "rat";
+    case SCORPION:return "scorpion";
+    case SPIDER:return "spider";
+    case STINKBUG:return "stinkbug";
+    case COCKROACH:
+    default:return "cockroach";
+  }
+}
+
 }

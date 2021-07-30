@@ -20,17 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
-#include "model/model.hpp"
-#include "view//view.hpp"
+#include "cardhcollection.hpp"
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
+namespace cpoker::view::components {
 
-  cpoker::model::Model model{};
-  cpoker::view::View view{};
-  view.show();
+CardHCollection::CardHCollection(QWidget *parent) : QHBoxLayout(parent) {
+  auto *button1 = new Card{BAT};
+  auto *button2 = new Card{FLY};
+  auto *button3 = new Card{COCKROACH};
+  auto *button4 = new Card{TOAD};
+  auto *button5 = new Card{RAT};
+  auto *button6 = new Card{SCORPION};
+  auto *button7 = new Card{SPIDER};
+  auto *button8 = new Card{STINKBUG};
+  addWidget(button1);
+  addWidget(button2);
+  addWidget(button3);
+  addWidget(button4);
+  addWidget(button5);
+  addWidget(button6);
+  addWidget(button7);
+  addWidget(button8);
 
-  return app.exec();
+}
 }

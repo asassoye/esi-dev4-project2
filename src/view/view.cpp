@@ -20,17 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
-#include "model/model.hpp"
-#include "view//view.hpp"
+#include <memory>
+#include <stdexcept>
+#include "view.hpp"
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
+namespace cpoker::view {
 
-  cpoker::model::Model model{};
-  cpoker::view::View view{};
-  view.show();
+View::View() {
+  cards_ = new components::CardHCollection{this};
+  setWindowTitle("Cockroach Poker");
 
-  return app.exec();
+  QWidget *window = new QWidget();
+  window->setLayout(cards_);
+
+  setCentralWidget(window);
+
+}
+
+View::~View() {
+  if (cards_ != nullptr) {
+    delete cards_;
+    cards_ = nullptr;
+  }
+}
+
 }

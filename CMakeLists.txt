@@ -4,8 +4,14 @@ project(cockroach_poker CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 set(QT_VERSION 6)
-set(REQUIRED_LIBS Widgets)
-set(REQUIRED_LIBS_QUALIFIED Qt6::Widgets)
+set(REQUIRED_LIBS Core Widgets)
+set(REQUIRED_LIBS_QUALIFIED Qt6::Core Qt6::Widgets)
+
+find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
+
+#set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 set(TEST_MAIN test/maintest.cpp)
 
@@ -14,6 +20,7 @@ if (NOT WIN32)
 endif ()
 
 include_directories(src)
+#include_directories(resources)
 
 #########################################################################################
 # SET UP / DOWNLOAD NEEDED LIBRARIES
@@ -107,7 +114,6 @@ add_executable(
 target_link_libraries(game_tests Catch2 GAME_LIB)
 add_test(NAME GameTests COMMAND game_tests)
 
-
 #########################################################################################
 # MODEL LIBRARY
 #########################################################################################
@@ -125,9 +131,31 @@ add_library(
 target_link_libraries(MODEL_LIB GAME_LIB)
 
 #########################################################################################
+# VIEW LIBRARY
+#########################################################################################
+set(
+        RESOURCES
+        resources/cards.qrc
+)
+
+set(
+        VIEW_SOURCES
+        src/view/components/card.cpp
+        src/view/view.cpp
+        ${RESOURCES}
+        src/view/components/cardhcollection.cpp src/view/components/cardhcollection.hpp)
+
+add_library(
+        VIEW_LIB
+        ${VIEW_SOURCES}
+)
+
+target_link_libraries(VIEW_LIB ${REQUIRED_LIBS_QUALIFIED})
+
+#########################################################################################
 # EXECUTABLES
 #########################################################################################
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp ${RESOURCES})
 
-find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} MODEL_LIB)
+
+target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} MODEL_LIB VIEW_LIB)

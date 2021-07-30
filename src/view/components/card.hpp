@@ -20,17 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QApplication>
-#include <QLabel>
-#include "model/model.hpp"
-#include "view//view.hpp"
 
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
+#ifndef COCKROACH_POKER_SRC_VIEW_CARD_HPP_
+#define COCKROACH_POKER_SRC_VIEW_CARD_HPP_
 
-  cpoker::model::Model model{};
-  cpoker::view::View view{};
-  view.show();
+#include <QPushButton>
+#include "view/components/cardtype.hpp"
 
-  return app.exec();
+namespace cpoker::view::components {
+class Card : public QPushButton {
+ Q_OBJECT
+  Q_PROPERTY(QString class READ className)
+ protected:
+  CardType type_;
+
+ public:
+  Card(CardType type, QWidget *parent = nullptr);
+
+  QString className();
+
+  virtual QSize sizeHint() const override;
+};
 }
+
+#endif //COCKROACH_POKER_SRC_VIEW_CARD_HPP_

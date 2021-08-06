@@ -24,22 +24,25 @@
 #ifndef COCKROACH_POKER_SRC_VIEW_CARD_HPP_
 #define COCKROACH_POKER_SRC_VIEW_CARD_HPP_
 
-#include <QPushButton>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
+#include <QPainter>
+#include <QWidget>
+#include <QRectF>
+#include <QStyleOptionGraphicsItem>
+#include <QGraphicsSvgItem>
 #include "view/components/cardtype.hpp"
 
 namespace cpoker::view::components {
-class Card : public QPushButton {
- Q_OBJECT
-  Q_PROPERTY(QString class READ className)
+class Card : public QGraphicsSvgItem {
  protected:
   CardType type_;
 
+  static QString svgFile(CardType type);
+
  public:
-  Card(CardType type, QWidget *parent = nullptr);
-
-  QString className();
-
-  virtual QSize sizeHint() const override;
+  explicit Card(CardType type, QGraphicsItem *parent = nullptr);
+  ~Card() = default;
 };
 }
 

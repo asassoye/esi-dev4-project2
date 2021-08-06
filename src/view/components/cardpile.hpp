@@ -20,17 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDHCOLLECTION_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDHCOLLECTION_HPP_
-#include <memory>
-#include <QHBoxLayout>
+
+#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+
+#include <QGraphicsItemGroup>
+#include <QGraphicsItem>
+#include <QRectF>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QWidget>
+#include <QVector>
+#include "view/components/cardtype.hpp"
 #include "view/components/card.hpp"
 
 namespace cpoker::view::components {
-class CardHCollection : public QHBoxLayout {
- Q_OBJECT
+class CardPile : public QGraphicsItemGroup {
+ protected:
+  CardType type_;
+  unsigned nb_;
+  QVector<Card *> cards_;
+
  public:
-  explicit CardHCollection(QWidget *parent = nullptr);
+  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
+  ~CardPile() = default;
+  QRectF boundingRect() const override;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDHCOLLECTION_HPP_
+#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_

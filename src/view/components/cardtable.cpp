@@ -20,19 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <memory>
-#include <stdexcept>
-#include <QGraphicsPixmapItem>
-#include "view.hpp"
 
-namespace cpoker::view {
+#include "cardtable.hpp"
 
-View::View() {
-  setWindowTitle("Cockroach Poker");
+namespace cpoker::view::components {
+
+CardTable::CardTable(QMap<CardType, unsigned> table, QGraphicsItem *parent) : QGraphicsItemGroup{parent} {
+  QMapIterator<CardType, unsigned> i(table);
+  while (i.hasNext()) {
+    i.next();
+    CardPile *card_pile = new CardPile{i.key(), i.value(), this};
+    card_pile->setPos(
+        static_cast<unsigned>(i.key()) * (card_pile->boundingRect().width() + card_pile->boundingRect().width() / 4),
+        0);
+    addToGroup(card_pile);
+  }
 }
-
-View::~View() {
-
-}
-
 }

@@ -25,13 +25,11 @@
 
 #include <QMainWindow>
 #include "view/components/card.hpp"
-#include "view/components/cardhcollection.hpp"
 
 namespace cpoker::view {
 class View : public QMainWindow {
  Q_OBJECT
  private:
-  components::CardHCollection *cards_;
 
  public:
   View();

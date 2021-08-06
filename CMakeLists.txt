@@ -4,12 +4,12 @@ project(cockroach_poker CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 set(QT_VERSION 6)
-set(REQUIRED_LIBS Core Widgets)
-set(REQUIRED_LIBS_QUALIFIED Qt6::Core Qt6::Widgets)
+set(REQUIRED_LIBS Core Widgets SvgWidgets)
+set(REQUIRED_LIBS_QUALIFIED Qt6::Core Qt6::SvgWidgets)
 
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
-#set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
@@ -140,10 +140,11 @@ set(
 
 set(
         VIEW_SOURCES
+        src/view/components/card.hpp
         src/view/components/card.cpp
         src/view/view.cpp
         ${RESOURCES}
-        src/view/components/cardhcollection.cpp src/view/components/cardhcollection.hpp)
+        src/view/components/cardpile.cpp src/view/components/cardpile.hpp src/view/components/cardtable.cpp src/view/components/cardtable.hpp)
 
 add_library(
         VIEW_LIB

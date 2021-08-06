@@ -21,39 +21,25 @@
 // SOFTWARE.
 
 
-#include <QFile>
 #include "card.hpp"
 
 namespace cpoker::view::components {
-
-Card::Card(CardType type, QWidget *parent) : QPushButton(parent), type_{type} {
-  QFile cssFile{":/css/card.css"};
-  cssFile.open(QFile::ReadOnly);
-  QString css = QLatin1String(cssFile.readAll());
-
-  setStyleSheet(css);
-  auto policy = this->sizePolicy();
-  policy.setHeightForWidth(true);
-  setSizePolicy(policy);
+Card::Card(CardType type, QGraphicsItem *parent)
+    : QGraphicsSvgItem{svgFile(type), parent}, type_{type} {
 
 }
 
-QSize Card::sizeHint() const {
-  return QSize{28, 43};
-}
-
-QString Card::className() {
-  switch (type_) {
-    case BAT:return "bat";
-    case FLY:return "fly";
-    case TOAD:return "toad";
-    case RAT:return "rat";
-    case SCORPION:return "scorpion";
-    case SPIDER:return "spider";
-    case STINKBUG:return "stinkbug";
+QString Card::svgFile(CardType type) {
+  switch (type) {
+    case BAT: return ":/cards/bat.svg";
+    case FLY: return ":/cards/fly.svg";
+    case TOAD: return ":/cards/toad.svg";
+    case RAT: return ":/cards/rat.svg";
+    case SCORPION: return ":/cards/scorpion.svg";
+    case SPIDER: return ":/cards/spider.svg";
+    case STINKBUG: return ":/cards/stinkbug.svg";
     case COCKROACH:
-    default:return "cockroach";
+    default: return ":/cards/cockroach.svg";
   }
 }
-
 }

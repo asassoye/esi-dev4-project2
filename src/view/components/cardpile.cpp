@@ -20,27 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "cardhcollection.hpp"
+//
+// Created by asassoye on 1/08/21.
+//
 
+#include "cardpile.hpp"
 namespace cpoker::view::components {
 
-CardHCollection::CardHCollection(QWidget *parent) : QHBoxLayout(parent) {
-  auto *button1 = new Card{BAT};
-  auto *button2 = new Card{FLY};
-  auto *button3 = new Card{COCKROACH};
-  auto *button4 = new Card{TOAD};
-  auto *button5 = new Card{RAT};
-  auto *button6 = new Card{SCORPION};
-  auto *button7 = new Card{SPIDER};
-  auto *button8 = new Card{STINKBUG};
-  addWidget(button1);
-  addWidget(button2);
-  addWidget(button3);
-  addWidget(button4);
-  addWidget(button5);
-  addWidget(button6);
-  addWidget(button7);
-  addWidget(button8);
+QRectF CardPile::boundingRect() const {
+  return QGraphicsItemGroup::boundingRect();
+}
 
+void CardPile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  QGraphicsItemGroup::paint(painter, option, widget);
+}
+
+CardPile::CardPile(CardType type, unsigned int nb, QGraphicsItem *parent) : QGraphicsItemGroup{parent} {
+  for (auto i = 0; i < nb; ++i) {
+    Card *card = new Card{type, this};
+    card->setPos(0, i * card->boundingRect().height() / 4);
+    addToGroup(card);
+  }
 }
 }
+
+

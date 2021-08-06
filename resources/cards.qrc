@@ -25,14 +25,14 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource prefix="cards">
-        <file alias="bat.png">images/cards/PNG/Bat@4x.png</file>
-        <file alias="fly.png">images/cards/PNG/Fly@4x.png</file>
-        <file alias="toad.png">images/cards/PNG/Toad@4x.png</file>
-        <file alias="rat.png">images/cards/PNG/Rat@4x.png</file>
-        <file alias="scorpion.png">images/cards/PNG/Scorpion@4x.png</file>
-        <file alias="spider.png">images/cards/PNG/Spider@4x.png</file>
-        <file alias="stinkbug.png">images/cards/PNG/Stinkbug@4x.png</file>
-        <file alias="cockroach.png">images/cards/PNG/Cockroach@4x.png</file>
+        <file alias="bat.svg">images/cards/SVG/Bat.svg</file>
+        <file alias="fly.svg">images/cards/SVG/Fly.svg</file>
+        <file alias="toad.svg">images/cards/SVG/Toad.svg</file>
+        <file alias="rat.svg">images/cards/SVG/Rat.svg</file>
+        <file alias="scorpion.svg">images/cards/SVG/Scorpion.svg</file>
+        <file alias="spider.svg">images/cards/SVG/Spider.svg</file>
+        <file alias="stinkbug.svg">images/cards/SVG/Stinkbug.svg</file>
+        <file alias="cockroach.svg">images/cards/SVG/Cockroach.svg</file>
     </qresource>
     <qresource prefix="css">
         <file alias="card.css">css/components/card.css</file>

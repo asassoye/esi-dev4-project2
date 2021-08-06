@@ -20,19 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <memory>
-#include <stdexcept>
-#include <QGraphicsPixmapItem>
-#include "view.hpp"
 
-namespace cpoker::view {
+#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_
+#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_
 
-View::View() {
-  setWindowTitle("Cockroach Poker");
+#include <QGraphicsItemGroup>
+#include <QGraphicsItem>
+#include <QRectF>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QWidget>
+#include <QVector>
+#include <QMap>
+#include "view/components/cardtype.hpp"
+#include "view/components/card.hpp"
+#include "view/components/cardpile.hpp"
+
+namespace cpoker::view::components {
+class CardTable : public QGraphicsItemGroup {
+ protected:
+ public:
+  CardTable(QMap<CardType, unsigned> table, QGraphicsItem *parent = nullptr);
+
+};
 }
-
-View::~View() {
-
-}
-
-}
+#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_

@@ -20,38 +20,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
-#define COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
+#include "playerpickerwindow.hpp"
 
-#include <QWidget>
-#include <map>
-#include <string>
+#include <stdexcept>
 
-#include "model/game/gamestatus.hpp"
-#include "utils/observer.hpp"
-#include "view/components/card.hpp"
-#include "view/windows/boardwindow.hpp"
-#include "view/windows/playerpickerwindow.hpp"
-#include "view/windows/startwindow.hpp"
+namespace cpoker::view::windows {
+PlayerPickerWindow::PlayerPickerWindow(QWidget *parent)
+    : QWidget(parent),
+      players_{},
+      layout_{new QVBoxLayout{}},
+      text_{new QLabel{this}} {
+  setLayout(layout_);
+  layout_->addWidget(text_);
+  setAttribute(Qt::WA_DeleteOnClose);
+}
 
-namespace cpoker::view {
-class View : public QWidget, public utils::Observer {
-  Q_OBJECT
- protected:
-  model::game::GameStatus status_;
-  windows::StartWindow *startWindow_;
-  windows::BoardWindow *boardWindow_;
-  windows::PlayerPickerWindow *player_picker_window_;
-  std::function<void(std::map<std::string, unsigned> &)> *startAction_;
-  [[maybe_unused]] void status(model::game::GameStatus status);
+void PlayerPickerWindow::players(const QVector<QString> &players) {
+  if (!players_.empty()) {
+    throw std::logic_error("Players are already set");
+  }
 
- public:
-  View();
-  void update(const std::string_view &propertyName,
-              const utils::Observable *observable) override;
-  void showBoard(const QVector<QString> &players);
-  void connectStartAction(
-      std::function<void(std::map<std::string, unsigned> &)> *startAction);
-};
-}  // namespace cpoker::view
-#endif  // COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
+  for (auto &player : players) {
+    auto *playerButton = new QPushButton{player, this};
+    players_.push_back(playerButton);
+    layout_->addWidget(playerButton);
+  }
+}
+
+void PlayerPickerWindow::player(const QString &player) {
+  player_ = player;
+  text_->setText(
+      QString{"%1, a qui voulez-vous envoyer la carte?"}.arg(player_));
+  disablePlayer(player);
+}
+
+void PlayerPickerWindow::disablePlayer(const QString &name) {
+  for (auto player : players_) {
+    if (player->text() == name) {
+      player->hide();
+    } else {
+      player->show();
+    }
+  }
+}
+}  // namespace cpoker::view::windows

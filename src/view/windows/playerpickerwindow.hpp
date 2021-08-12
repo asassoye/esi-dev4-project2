@@ -20,38 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
-#define COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
+#ifndef COCKROACH_POKER_SRC_VIEW_WINDOWS_PLAYERPICKERWINDOW_HPP_
+#define COCKROACH_POKER_SRC_VIEW_WINDOWS_PLAYERPICKERWINDOW_HPP_
 
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
 #include <QWidget>
-#include <map>
-#include <string>
 
-#include "model/game/gamestatus.hpp"
-#include "utils/observer.hpp"
-#include "view/components/card.hpp"
-#include "view/windows/boardwindow.hpp"
-#include "view/windows/playerpickerwindow.hpp"
-#include "view/windows/startwindow.hpp"
-
-namespace cpoker::view {
-class View : public QWidget, public utils::Observer {
+namespace cpoker::view::windows {
+class PlayerPickerWindow : public QWidget {
   Q_OBJECT
- protected:
-  model::game::GameStatus status_;
-  windows::StartWindow *startWindow_;
-  windows::BoardWindow *boardWindow_;
-  windows::PlayerPickerWindow *player_picker_window_;
-  std::function<void(std::map<std::string, unsigned> &)> *startAction_;
-  [[maybe_unused]] void status(model::game::GameStatus status);
+ private:
+  QVector<QPushButton *> players_;
+  QString player_;
+  QVBoxLayout *layout_;
+  QLabel *text_;
+  void disablePlayer(const QString &name);
 
  public:
-  View();
-  void update(const std::string_view &propertyName,
-              const utils::Observable *observable) override;
-  void showBoard(const QVector<QString> &players);
-  void connectStartAction(
-      std::function<void(std::map<std::string, unsigned> &)> *startAction);
+  explicit PlayerPickerWindow(QWidget *parent = nullptr);
+  void players(const QVector<QString> &players);
+  void player(const QString &player);
 };
-}  // namespace cpoker::view
-#endif  // COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
+}  // namespace cpoker::view::windows
+#endif  // COCKROACH_POKER_SRC_VIEW_WINDOWS_PLAYERPICKERWINDOW_HPP_

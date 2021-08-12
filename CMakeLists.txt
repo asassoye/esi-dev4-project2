@@ -136,7 +136,7 @@ set(
         src/view/windows/startwindow.cpp
         src/view/widgets/playerinput.cpp
         src/view/windows/boardwindow.cpp
-)
+        src/view/windows/playerpickerwindow.cpp src/view/windows/playerpickerwindow.hpp)
 
 add_library(
         VIEW_LIB

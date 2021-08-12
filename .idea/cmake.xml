@@ -2,9 +2,9 @@
 <project version="4">
   <component name="CMakeSharedSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-GNinja -DCMAKE_BUILD_TYPE=Debug" GENERATION_DIR="build/debug" BUILD_OPTIONS="-j 8" ENABLED="true" />
-      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" GENERATION_OPTIONS="-GNinja -DCMAKE_BUILD_TYPE=Release" GENERATION_DIR="build/release" BUILD_OPTIONS="-j 8" ENABLED="true" />
-      <configuration PROFILE_NAME="Coverage" CONFIG_NAME="Debug" GENERATION_OPTIONS="-GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage" GENERATION_DIR="build/coverage" BUILD_OPTIONS="-j 8" ENABLED="true" />
+      <configuration PROFILE_NAME="Debug" ENABLED="true" GENERATION_DIR="build/debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-GNinja -DCMAKE_BUILD_TYPE=Debug" BUILD_OPTIONS="-j 8" />
+      <configuration PROFILE_NAME="Release" ENABLED="true" GENERATION_DIR="build/release" CONFIG_NAME="Release" GENERATION_OPTIONS="-GNinja -DCMAKE_BUILD_TYPE=Release" BUILD_OPTIONS="-j 8" />
+      <configuration PROFILE_NAME="Coverage" ENABLED="true" GENERATION_DIR="build/coverage" CONFIG_NAME="Debug" GENERATION_OPTIONS="-GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=--coverage" BUILD_OPTIONS="-j8" />
     </configurations>
   </component>
 </project>

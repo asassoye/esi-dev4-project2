@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -33,13 +33,13 @@ StartWindow::StartWindow(QWidget *parent) : QWidget(parent) {
   layout_ = new QVBoxLayout{this};
   this->setLayout(layout_);
 
-  auto *plusmin = new QHBoxLayout{};
-  layout_->addLayout(plusmin);
+  auto *plus_min_layout = new QHBoxLayout{};
+  layout_->addLayout(plus_min_layout);
 
-  auto *plus = new QPushButton("+", this);
-  auto *min = new QPushButton("-", this);
-  plusmin->addWidget(plus);
-  plusmin->addWidget(min);
+  plus_ = new QPushButton("+", this);
+  min_ = new QPushButton("-", this);
+  plus_min_layout->addWidget(plus_);
+  plus_min_layout->addWidget(min_);
 
   confirm_ = new QPushButton{"Nouvelle Partie", this};
   connect(confirm_, &QPushButton::pressed, this, [this]() {
@@ -50,8 +50,9 @@ StartWindow::StartWindow(QWidget *parent) : QWidget(parent) {
   addPlayer();
   addPlayer();
 
-  connect(plus, &QPushButton::clicked, this, &StartWindow::addPlayer);
-  connect(min, &QPushButton::clicked, this, &StartWindow::removePlayer);
+  connect(plus_, &QPushButton::clicked, this, &StartWindow::addPlayer);
+  connect(min_, &QPushButton::clicked, this, &StartWindow::removePlayer);
+  setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::addPlayer() {

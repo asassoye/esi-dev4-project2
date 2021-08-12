@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -149,6 +149,21 @@ Player &Round::looser() noexcept(false) {
   }
 
   return *sender_;
+}
+Player &Round::playing() const {
+  if (status_ == INIT || status_ == LOOSED) {
+    throw std::logic_error("not started");
+  }
+
+  switch (status_) {
+    default:
+    case CHOOSING_CARD:
+    case CHOOSING_VALUE:
+    case CHOOSING_RECEIVER:
+      return *sender_;
+    case SEND:
+      return *receiver_;
+  }
 }
 
 }  // namespace cpoker::model::game

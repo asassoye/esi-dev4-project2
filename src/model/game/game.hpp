@@ -30,9 +30,10 @@
 #include "model/game/gamestatus.hpp"
 #include "model/game/player.hpp"
 #include "model/game/round.hpp"
+#include "utils/observable.hpp"
 
 namespace cpoker::model::game {
-class Game {
+class Game : public utils::Observable {
  protected:
 
   GameStatus status_;
@@ -51,11 +52,17 @@ class Game {
 
   void addPlayer(const std::string_view &name, unsigned age);
 
+  void addPlayers(const std::map<std::string, unsigned> &players);
+
   void removePlayer(unsigned index) noexcept(false);
 
   void distributeCards() noexcept(false);
 
   void start() noexcept(false);
+
+  GameStatus status() const;
+
+  void status(const GameStatus status);
 
 };
 }

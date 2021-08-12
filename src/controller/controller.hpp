@@ -20,35 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
+#define COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+#include <functional>
+#include <map>
+#include "model/model.hpp"
+#include "view//view.hpp"
 
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
-#include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
-
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
+namespace cpoker::controller {
+class Controller {
  protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
 
+  model::Model *model_;
+  view::View *view_;
  public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  std::function<void(std::map<std::string, unsigned> &)> startAction_;
+  Controller(model::Model *model, view::View *view);
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+
+#endif //COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_

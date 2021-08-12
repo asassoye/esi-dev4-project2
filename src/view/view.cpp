@@ -22,17 +22,53 @@
 
 #include <memory>
 #include <stdexcept>
+#include <iostream>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsView>
 #include "view.hpp"
+#include "model/model.hpp"
 
 namespace cpoker::view {
 
-View::View() {
+View::View() : status_{model::game::NOT_STARTED} {
   setWindowTitle("Cockroach Poker");
+
+  startWindow_ = new windows::StartWindow{};
+  startWindow_->show();
+
 }
 
-View::~View() {
+void View::update(const std::string_view &propertyName, const utils::Observable *observable) {
+  std::cout << propertyName << std::endl;
 
+  auto model = dynamic_cast<const model::Model *>(observable);
+
+  if (propertyName == "STATUS_UPDATED") {
+    status_ = model->status();
+  }
+}
+
+void View::showBoard() {
+  QGraphicsView gview = QGraphicsView{this};
+  //gview.setScene(&scene);
+
+  gview.setFrameStyle(QFrame::NoFrame);
+  gview.setAlignment(Qt::AlignLeft | Qt::AlignTop);
+  gview.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+  gview.show();
+}
+
+void View::askPlayers() {
+
+}
+
+void View::connectStartAction(std::function<void(std::map<std::string, unsigned> &)> *startAction) {
+  startAction_ = startAction;
+  connect(startWindow_, &windows::StartWindow::confirmed, this, [this, startAction]() {
+    auto players = startWindow_->players();
+    (*startAction)(players);
+    startWindow_->hide();
+  });
 }
 
 }

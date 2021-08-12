@@ -20,35 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "playerinput.hpp"
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+namespace cpoker::view::widgets {
+PlayerInput::PlayerInput(QWidget *parent) : PlayerInput(0, parent) {}
 
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
-#include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
+PlayerInput::PlayerInput(unsigned int id, QWidget *parent) : QWidget(parent) {
+  layout_ = new QHBoxLayout{this};
+  this->setLayout(layout_);
 
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
- protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
+  name_ = new QLineEdit{this};
 
- public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
-};
+  name_->setText(QString{"Player%1"}.arg(id));
+  layout_->addWidget(name_);
+
+  age_ = new QSpinBox{this};
+  age_->setSuffix(" ans");
+  age_->setRange(8, 99);
+  layout_->addWidget(age_);
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+
+std::string PlayerInput::name() const {
+  return name_->text().toStdString();
+}
+
+unsigned PlayerInput::age() const {
+  return age_->value();
+}
+}

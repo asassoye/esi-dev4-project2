@@ -26,9 +26,9 @@
 #include "model/game/game.hpp"
 
 namespace cpoker::model {
-class Model : public game::Game {
+ class Model : public game::Game {
 
-};
+ };
 }
 
 #endif //COCKROACH_POKER_SRC_MODEL_MODEL_HPP_

@@ -39,9 +39,13 @@
 namespace cpoker::view::components {
 class CardTable : public QGraphicsItemGroup {
  protected:
+  QMap<CardType, CardPile *> piles_;
  public:
-  CardTable(QMap<CardType, unsigned> table, QGraphicsItem *parent = nullptr);
-
+  explicit CardTable(const QMap<CardType, unsigned int> &table, QGraphicsItem *parent = nullptr);
+  explicit CardTable(QGraphicsItem *parent = nullptr);
+  void add(CardType type);
+  void update(QMap<CardType, unsigned> table);
+  QRectF boundingRect() const override;
 };
 }
 #endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_

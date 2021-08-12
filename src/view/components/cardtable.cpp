@@ -21,19 +21,42 @@
 // SOFTWARE.
 
 
+#include <iostream>
 #include "cardtable.hpp"
 
 namespace cpoker::view::components {
 
-CardTable::CardTable(QMap<CardType, unsigned> table, QGraphicsItem *parent) : QGraphicsItemGroup{parent} {
-  QMapIterator<CardType, unsigned> i(table);
-  while (i.hasNext()) {
-    i.next();
-    CardPile *card_pile = new CardPile{i.key(), i.value(), this};
+CardTable::CardTable(const QMap<CardType, unsigned int> &table, QGraphicsItem *parent) : QGraphicsItemGroup{parent},
+                                                                                         piles_{} {
+  for (auto type: CardTypes) {
+    CardPile *card_pile = new CardPile{type, 0, this};
+    double aX = static_cast<unsigned>(type) * (167 + 167.0 / 4);
+    double aY = 0;
     card_pile->setPos(
-        static_cast<unsigned>(i.key()) * (card_pile->boundingRect().width() + card_pile->boundingRect().width() / 4),
-        0);
+        aX,
+        aY);
     addToGroup(card_pile);
+    this->piles_.insert(type, card_pile);
   }
+
+  //update(table);
+}
+
+CardTable::CardTable(QGraphicsItem *parent) : CardTable(QMap<CardType, unsigned>{}, parent) {}
+
+void CardTable::add(CardType type) {
+  CardPile *card_pile = piles_.value(type);
+  card_pile->addCard();
+}
+
+void CardTable::update(QMap<CardType, unsigned int> table) {
+  for (auto &pile : piles_) {
+    pile->update(table.value(pile->type(), 0));
+    std::cout << pile->boundingRect().width() << " " << pile->boundingRect().height() << std::endl;
+  }
+}
+
+QRectF CardTable::boundingRect() const {
+  return QRectF{0.0, 0.0, 167.0 * 8 + (167.0 / 4) * 8, 387.0};
 }
 }

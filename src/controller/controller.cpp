@@ -20,35 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <stdexcept>
+#include "controller.hpp"
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+namespace cpoker::controller {
 
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
-#include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
+Controller::Controller(model::Model *model, view::View *view) : model_{model}, view_{view} {
+  if (model == nullptr) {
+    throw std::invalid_argument("Model cannot be null");
+  }
 
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
- protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
+  if (view == nullptr) {
+    throw std::invalid_argument("View cannot be null");
+  }
 
- public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
-};
+  model->addObserver(view);
+
+  startAction_ = [this](std::map<std::string, unsigned> &players) {
+    model_->addPlayers(players);
+  };
+
+  view->connectStartAction(&startAction_);
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+}

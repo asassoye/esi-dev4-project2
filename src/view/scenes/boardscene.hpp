@@ -20,35 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef COCKROACH_POKER_SRC_VIEW_SCENES_BOARDSCENE_HPP_
+#define COCKROACH_POKER_SRC_VIEW_SCENES_BOARDSCENE_HPP_
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
+#include <QGraphicsScene>
+#include <QMap>
+#include <QString>
 #include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
+#include "view/components/cardtable.hpp"
 
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
+namespace cpoker::view::scenes {
+class BoardScene : public QGraphicsScene {
+ Q_OBJECT
  protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
-
+  QMap<QString, components::CardTable *> players_;
  public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  explicit BoardScene(const QVector<QString> &players);
+
+  void update(const QString &playerName, const QMap<components::CardType, unsigned> &update);
+
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+#endif //COCKROACH_POKER_SRC_VIEW_SCENES_BOARDSCENE_HPP_

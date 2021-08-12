@@ -45,6 +45,8 @@ void Game::addPlayer(const std::string_view &name, unsigned int age) {
   }
 
   players_.emplace_back(name, age);
+
+  notify("PLAYER_ADDED");
 }
 
 void Game::removePlayer(unsigned int index) noexcept(false) {
@@ -53,6 +55,7 @@ void Game::removePlayer(unsigned int index) noexcept(false) {
   }
 
   players_.erase(players_.begin() + index);
+  notify("PLAYER_REMOVED");
 }
 
 void Game::distributeCards() {
@@ -73,13 +76,13 @@ void Game::distributeCards() {
     players_[count++ % players_.size()].addHand(card);
   }
 
-  status_ = CARDS_DISTRIBUTED;
+  status(CARDS_DISTRIBUTED);
 }
 
 void Game::start() noexcept(false) {
   if (status_ == NOT_STARTED) {
     distributeCards();
-    status_ = CARDS_DISTRIBUTED;
+    status(CARDS_DISTRIBUTED);
   }
 
   if (status_ != CARDS_DISTRIBUTED) {
@@ -87,7 +90,7 @@ void Game::start() noexcept(false) {
   }
 
   round_.start(youngestPlayer());
-  status_ = STARTED;
+  status(STARTED);
 }
 
 Player &Game::youngestPlayer() noexcept(false) {
@@ -99,6 +102,22 @@ Player &Game::youngestPlayer() noexcept(false) {
   }
 
   return *youngest;
+}
+
+GameStatus Game::status() const {
+  return status_;
+}
+
+void Game::status(GameStatus status) {
+  status_ = status;
+
+  notify("STATUS_UPDATED");
+}
+
+void Game::addPlayers(const std::map<std::string, unsigned> &players) {
+  for (auto &player : players) {
+    addPlayer(player.first, player.second);
+  }
 }
 
 }

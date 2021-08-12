@@ -21,34 +21,33 @@
 // SOFTWARE.
 
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+#ifndef COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_
+#define COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_
 
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
-#include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
+#include <set>
+#include "utils/observer.hpp"
 
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
+namespace cpoker::utils {
+
+class Observable {
  protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
-
+  std::set<Observer *> observers_;
  public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  //virtual ~Observable() = default;
+
+  virtual void addObserver(Observer *observer) final {
+    observers_.insert(observer);
+  }
+
+  virtual void removeObserver(Observer *observer) final {
+    observers_.erase(observer);
+  }
+
+  virtual void notify(const std::string_view &propertyName) const final {
+    for (auto const &observer : observers_) {
+      observer->update(propertyName, this);
+    }
+  }
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+#endif //COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_

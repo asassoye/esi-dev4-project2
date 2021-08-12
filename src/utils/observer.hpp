@@ -20,35 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef COCKROACH_POKER_SRC_UTILS_OBSERVER_HPP_
+#define COCKROACH_POKER_SRC_UTILS_OBSERVER_HPP_
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+namespace cpoker::utils {
+class Observable;
 
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
-#include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
-
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
- protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
-
+class Observer {
  public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  virtual void update(const std::string_view &propertyName, const Observable *observable) = 0;
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+
+#endif //COCKROACH_POKER_SRC_UTILS_OBSERVER_HPP_

@@ -23,17 +23,28 @@
 #ifndef COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
 #define COCKROACH_POKER_SRC_VIEW_VIEW_HPP_
 
-#include <QMainWindow>
+#include <QWidget>
+#include <string>
+#include <map>
 #include "view/components/card.hpp"
+#include "view/windows/startwindow.hpp"
+#include "utils/observer.hpp"
+#include "model/game/gamestatus.hpp"
 
 namespace cpoker::view {
-class View : public QMainWindow {
+class View : public QWidget, public utils::Observer {
  Q_OBJECT
- private:
+ protected:
+  model::game::GameStatus status_;
+  windows::StartWindow *startWindow_;
+  std::function<void(std::map<std::string, unsigned> &)> *startAction_;
 
  public:
   View();
-  ~View();
+  void update(const std::string_view &propertyName, const utils::Observable *observable) override;
+  void showBoard();
+  void askPlayers();
+  void connectStartAction(std::function<void(std::map<std::string, unsigned> &)> *startAction);
 };
 }
 #endif //COCKROACH_POKER_SRC_VIEW_VIEW_HPP_

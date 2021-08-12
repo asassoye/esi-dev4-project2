@@ -20,7 +20,6 @@ if (NOT WIN32)
 endif ()
 
 include_directories(src)
-#include_directories(resources)
 
 #########################################################################################
 # SET UP / DOWNLOAD NEEDED LIBRARIES
@@ -36,19 +35,6 @@ if (NOT Catch2_FOUND)
     FetchContent_MakeAvailable(Catch2)
 endif ()
 
-#find_package(jsoncpp QUIET)
-#if (NOT jsoncpp_FOUND)
-#    message("jsoncpp not found, downloading from git.")
-#    Include(FetchContent)
-#    FetchContent_Declare(
-#            jsoncpp
-#            GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
-#            GIT_TAG 1.9.4)
-#
-#    FetchContent_MakeAvailable(jsoncpp)
-#
-#endif ()
-#include_directories(${jsoncpp_SOURCE_DIR}/include)
 include(CTest)
 
 #########################################################################################
@@ -140,11 +126,16 @@ set(
 
 set(
         VIEW_SOURCES
+        ${RESOURCES}
         src/view/components/card.hpp
         src/view/components/card.cpp
         src/view/view.cpp
-        ${RESOURCES}
-        src/view/components/cardpile.cpp src/view/components/cardpile.hpp src/view/components/cardtable.cpp src/view/components/cardtable.hpp)
+        src/view/components/cardpile.cpp
+        src/view/components/cardtable.cpp
+        src/view/scenes/boardscene.cpp
+        src/view/windows/startwindow.cpp
+        src/view/widgets/playerinput.cpp
+)
 
 add_library(
         VIEW_LIB
@@ -154,9 +145,24 @@ add_library(
 target_link_libraries(VIEW_LIB ${REQUIRED_LIBS_QUALIFIED})
 
 #########################################################################################
+# CONTROLLER LIBRARY
+#########################################################################################
+set(
+        CONTROLLER_SOURCES
+        src/controller/controller.cpp
+)
+
+add_library(
+        CONTROLLER_LIB
+        ${CONTROLLER_SOURCES}
+)
+
+target_link_libraries(CONTROLLER_LIB VIEW_LIB MODEL_LIB)
+
+#########################################################################################
 # EXECUTABLES
 #########################################################################################
 add_executable(${PROJECT_NAME} src/main.cpp ${RESOURCES})
 
 
-target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} MODEL_LIB VIEW_LIB)
+target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED} MODEL_LIB VIEW_LIB CONTROLLER_LIB)

@@ -21,34 +21,29 @@
 // SOFTWARE.
 
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+#ifndef COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_
+#define COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_
 
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
 #include <QWidget>
-#include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
+#include <QLineEdit>
+#include <QHBoxLayout>
+#include <QSpinBox>
+#include <string_view>
 
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
+namespace cpoker::view::widgets {
+class PlayerInput : public QWidget {
+ Q_OBJECT
  protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
+  QHBoxLayout *layout_;
+  QLineEdit *name_;
+  QSpinBox *age_;
 
  public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  explicit PlayerInput(QWidget *parent = nullptr);
+  explicit PlayerInput(unsigned id, QWidget *parent = nullptr);
+  std::string name() const;
+  unsigned age() const;
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+
+#endif //COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_

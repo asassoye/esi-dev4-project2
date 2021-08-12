@@ -20,35 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#ifndef COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_
+#define COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_
 
-#ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-#define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
-
-#include <QGraphicsItemGroup>
-#include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
 #include <QWidget>
 #include <QVector>
-#include "view/components/cardtype.hpp"
-#include "view/components/card.hpp"
+#include <QMap>
+#include <string>
+#include <string_view>
+#include <map>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include "view/widgets/playerinput.hpp"
 
-namespace cpoker::view::components {
-class CardPile : public QGraphicsItemGroup {
+namespace cpoker::view::windows {
+class StartWindow : public QWidget {
+ Q_OBJECT
  protected:
-  CardType type_;
-  unsigned nb_;
-  QVector<Card *> cards_;
+  QVBoxLayout *layout_;
+  QVector<widgets::PlayerInput *> players_;
+  QPushButton *confirm_;
 
+ signals:
+  void confirmed();
+
+ protected slots:
+  void addPlayer();
+  void removePlayer();
  public:
-  CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-  void addCard();
-  void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  explicit StartWindow(QWidget *parent = nullptr);
+  std::map<std::string, unsigned> players() const;
 };
 }
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+
+#endif //COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_

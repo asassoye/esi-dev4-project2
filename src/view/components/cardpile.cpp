@@ -35,12 +35,32 @@ void CardPile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
   QGraphicsItemGroup::paint(painter, option, widget);
 }
 
-CardPile::CardPile(CardType type, unsigned int nb, QGraphicsItem *parent) : QGraphicsItemGroup{parent} {
+CardPile::CardPile(CardType type, unsigned int nb, QGraphicsItem *parent) : QGraphicsItemGroup{parent},
+                                                                            type_{type},
+                                                                            nb_{0} {
   for (auto i = 0; i < nb; ++i) {
-    Card *card = new Card{type, this};
-    card->setPos(0, i * card->boundingRect().height() / 4);
-    addToGroup(card);
+    addCard();
   }
+}
+
+void CardPile::addCard() {
+  Card *card = new Card{this->type_, this};
+  card->setPos(0, this->nb_ * card->boundingRect().height() / 4);
+  ++(this->nb_);
+  addToGroup(card);
+}
+
+void CardPile::update(unsigned nb) {
+  for (int i = this->nb_; i < nb; ++i) {
+    addCard();
+  }
+}
+unsigned CardPile::nb() {
+  return nb_;
+}
+
+CardType CardPile::type() {
+  return type_;
 }
 }
 

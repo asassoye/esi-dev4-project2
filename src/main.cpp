@@ -20,21 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include
-<QApplication>
-#include
-"model/model.hpp"
-#include
-"view/view.hpp"
-#include
-"controller/controller.hpp"
+#include <QApplication>
+#include "model/model.hpp"
+#include "view/view.hpp"
+#include "controller/controller.hpp"
 
 int main(int argc, char *argv[]) {
-QApplication app(argc, argv);
+  QApplication app(argc, argv);
 
-cpoker::model::Model model{};
-cpoker::view::View view{};
-cpoker::controller::Controller{ &model, &view };
+  cpoker::model::Model model{};
+  cpoker::view::View view{};
+  cpoker::controller::Controller{&model, &view};
 
-return QApplication::exec();
+  return QApplication::exec();
 }

@@ -25,19 +25,20 @@
 
 #include <functional>
 #include <map>
+
 #include "model/model.hpp"
 #include "view//view.hpp"
 
 namespace cpoker::controller {
 class Controller {
  protected:
-
   model::Model *model_;
   view::View *view_;
+
  public:
   std::function<void(std::map<std::string, unsigned> &)> startAction_;
   Controller(model::Model *model, view::View *view);
 };
-}
+}  // namespace cpoker::controller
 
-#endif //COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
+#endif  // COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_

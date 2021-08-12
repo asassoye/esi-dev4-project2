@@ -21,4 +21,3 @@
 // SOFTWARE.
 
 #include "card.hpp"
-

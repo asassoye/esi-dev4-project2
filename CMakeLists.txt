@@ -135,6 +135,7 @@ set(
         src/view/scenes/boardscene.cpp
         src/view/windows/startwindow.cpp
         src/view/widgets/playerinput.cpp
+        src/view/windows/boardwindow.cpp
 )
 
 add_library(

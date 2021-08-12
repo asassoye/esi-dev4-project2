@@ -24,9 +24,10 @@
 #define COCKROACH_POKER_SRC_MODEL_GAME_ROUND_HPP_
 
 #include <optional>
-#include "model/game/rountstatus.hpp"
-#include "model/game/player.hpp"
+
 #include "model/cards//card.hpp"
+#include "model/game/player.hpp"
+#include "model/game/rountstatus.hpp"
 
 namespace cpoker::model::game {
 class Round {
@@ -41,7 +42,9 @@ class Round {
 
   std::optional<cards::Card> value_;
 
-  void next(Player &nextSender, const std::optional<cards::Card> &card = std::optional<cards::Card>()) noexcept(false);
+  void next(Player &nextSender,
+            const std::optional<cards::Card> &card =
+                std::optional<cards::Card>()) noexcept(false);
 
  public:
   Round();
@@ -61,8 +64,7 @@ class Round {
   void transfer(Player &receiver);
 
   Player &looser() noexcept(false);
-
 };
-}
+}  // namespace cpoker::model::game
 
-#endif //COCKROACH_POKER_SRC_MODEL_GAME_ROUND_HPP_
+#endif  // COCKROACH_POKER_SRC_MODEL_GAME_ROUND_HPP_

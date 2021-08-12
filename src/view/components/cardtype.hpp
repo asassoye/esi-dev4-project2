@@ -66,15 +66,7 @@ enum CardType {
 };
 
 static constexpr std::array<CardType, 8> CardTypes = {
-    BAT,
-    FLY,
-    COCKROACH,
-    TOAD,
-    RAT,
-    SCORPION,
-    SPIDER,
-    STINKBUG
-};
-}
+    BAT, FLY, COCKROACH, TOAD, RAT, SCORPION, SPIDER, STINKBUG};
+}  // namespace cpoker::view::components
 
-#endif //COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_
+#endif  // COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_

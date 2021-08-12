@@ -26,8 +26,9 @@
 #ifndef COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_
 #define COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_
 
-#include "cardtype.hpp"
 #include <string_view>
+
+#include "cardtype.hpp"
 
 namespace cpoker::model::cards {
 /**
@@ -68,7 +69,7 @@ class Card {
   constexpr inline CardType type() noexcept;
 
   /**
-   * @brief name of the card type
+   * @brief name of the card cardType
    *
    * @return Name of the Card
    */
@@ -109,35 +110,37 @@ inline bool operator!=(const Card &, const Card &);
 
 constexpr Card::Card(CardType card_type) noexcept : type_{card_type} {}
 
-constexpr Card::Card(Card && card) noexcept : type_{card.type_} {}
+constexpr Card::Card(Card &&card) noexcept : type_{card.type_} {}
 
-constexpr Card::Card(const Card & card) noexcept = default;
+constexpr Card::Card(const Card &card) noexcept = default;
 
-constexpr CardType Card::type() noexcept {
-  return type_;
-}
+constexpr CardType Card::type() noexcept { return type_; }
 
 constexpr std::string_view Card::name() noexcept {
   switch (type_) {
-    case BAT:return "BAT";
-    case FLY:return "FLY";
-    case TOAD:return "TOAD";
-    case RAT:return "RAT";
-    case SCORPION:return "SCORPION";
-    case SPIDER:return "SPIDER";
-    case STINKBUG:return "STINKBUG";
+    case BAT:
+      return "BAT";
+    case FLY:
+      return "FLY";
+    case TOAD:
+      return "TOAD";
+    case RAT:
+      return "RAT";
+    case SCORPION:
+      return "SCORPION";
+    case SPIDER:
+      return "SPIDER";
+    case STINKBUG:
+      return "STINKBUG";
     case COCKROACH:
-    default:return "COCKROACH";
+    default:
+      return "COCKROACH";
   }
 }
 
-bool operator==(const Card &a, const Card &b) {
-  return a.type_ == b.type_;
-}
+bool operator==(const Card &a, const Card &b) { return a.type_ == b.type_; }
 
-bool operator!=(const Card &a, const Card &b){
-  return !(a == b);
-}
-}
+bool operator!=(const Card &a, const Card &b) { return !(a == b); }
+}  // namespace cpoker::model::cards
 
-#endif //COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_
+#endif  // COCKROACH_POKER_SRC_MODEL_CARDS_CARD_HPP_

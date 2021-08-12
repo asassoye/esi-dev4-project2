@@ -20,19 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_MODEL_MODEL_HPP_
-#define COCKROACH_POKER_SRC_MODEL_MODEL_HPP_
+#ifndef COCKROACH_POKER_SRC_VIEW_WINDOWS_BOARDWINDOW_HPP_
+#define COCKROACH_POKER_SRC_VIEW_WINDOWS_BOARDWINDOW_HPP_
 
-#include <string>
-#include <vector>
+#include <QGraphicsView>
+#include <QWidget>
 
-#include "model/game/game.hpp"
+#include "view/scenes/boardscene.hpp"
 
-namespace cpoker::model {
-class Model : public game::Game {
+namespace cpoker::view::windows {
+class BoardWindow : public QGraphicsView {
+  Q_OBJECT
+ protected:
+  scenes::BoardScene *boardScene_;
+
  public:
-  [[nodiscard]] std::vector<std::string_view> players() const;
+  explicit BoardWindow(const QVector<QString> &players,
+                       QWidget *parent = nullptr);
 };
-}  // namespace cpoker::model
-
-#endif
+}  // namespace cpoker::view::windows
+#endif  // COCKROACH_POKER_SRC_VIEW_WINDOWS_BOARDWINDOW_HPP_

@@ -20,19 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #ifndef COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_
 #define COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_
 
-#include <QWidget>
-#include <QLineEdit>
 #include <QHBoxLayout>
+#include <QLineEdit>
 #include <QSpinBox>
+#include <QWidget>
 #include <string_view>
 
 namespace cpoker::view::widgets {
 class PlayerInput : public QWidget {
- Q_OBJECT
+  Q_OBJECT
  protected:
   QHBoxLayout *layout_;
   QLineEdit *name_;
@@ -41,9 +40,9 @@ class PlayerInput : public QWidget {
  public:
   explicit PlayerInput(QWidget *parent = nullptr);
   explicit PlayerInput(unsigned id, QWidget *parent = nullptr);
-  std::string name() const;
-  unsigned age() const;
+  [[nodiscard]] std::string name() const;
+  [[nodiscard]] unsigned age() const;
 };
-}
+}  // namespace cpoker::view::widgets
 
-#endif //COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_
+#endif  // COCKROACH_POKER_SRC_VIEW_WIDGETS_PLAYERINPUT_HPP_

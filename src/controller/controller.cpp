@@ -19,13 +19,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+#include "controller.hpp"
 
 #include <stdexcept>
-#include "controller.hpp"
 
 namespace cpoker::controller {
 
-Controller::Controller(model::Model *model, view::View *view) : model_{model}, view_{view} {
+Controller::Controller(model::Model *model, view::View *view)
+    : model_{model}, view_{view} {
   if (model == nullptr) {
     throw std::invalid_argument("Model cannot be null");
   }
@@ -38,8 +39,9 @@ Controller::Controller(model::Model *model, view::View *view) : model_{model}, v
 
   startAction_ = [this](std::map<std::string, unsigned> &players) {
     model_->addPlayers(players);
+    model_->start();
   };
 
   view->connectStartAction(&startAction_);
 }
-}
+}  // namespace cpoker::controller

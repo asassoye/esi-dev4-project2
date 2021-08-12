@@ -27,18 +27,20 @@
 #include <QMap>
 #include <QString>
 #include <QVector>
+
 #include "view/components/cardtable.hpp"
 
 namespace cpoker::view::scenes {
 class BoardScene : public QGraphicsScene {
- Q_OBJECT
+  Q_OBJECT
  protected:
   QMap<QString, components::CardTable *> players_;
+
  public:
   explicit BoardScene(const QVector<QString> &players);
 
-  void update(const QString &playerName, const QMap<components::CardType, unsigned> &update);
-
+  void update(const QString &playerName,
+              const QMap<components::CardType, unsigned> &update);
 };
-}
-#endif //COCKROACH_POKER_SRC_VIEW_SCENES_BOARDSCENE_HPP_
+}  // namespace cpoker::view::scenes
+#endif  // COCKROACH_POKER_SRC_VIEW_SCENES_BOARDSCENE_HPP_

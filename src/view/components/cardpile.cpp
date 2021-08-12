@@ -31,13 +31,13 @@ QRectF CardPile::boundingRect() const {
   return QGraphicsItemGroup::boundingRect();
 }
 
-void CardPile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void CardPile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                     QWidget *widget) {
   QGraphicsItemGroup::paint(painter, option, widget);
 }
 
-CardPile::CardPile(CardType type, unsigned int nb, QGraphicsItem *parent) : QGraphicsItemGroup{parent},
-                                                                            type_{type},
-                                                                            nb_{0} {
+CardPile::CardPile(CardType type, unsigned int nb, QGraphicsItem *parent)
+    : QGraphicsItemGroup{parent}, type_{type}, nb_{0} {
   for (auto i = 0; i < nb; ++i) {
     addCard();
   }
@@ -51,17 +51,11 @@ void CardPile::addCard() {
 }
 
 void CardPile::update(unsigned nb) {
-  for (int i = this->nb_; i < nb; ++i) {
+  for (unsigned i = this->nb_; i < nb; ++i) {
     addCard();
   }
 }
-unsigned CardPile::nb() {
-  return nb_;
-}
+unsigned CardPile::nb() const { return nb_; }
 
-CardType CardPile::type() {
-  return type_;
-}
-}
-
-
+CardType CardPile::cardType() { return type_; }
+}  // namespace cpoker::view::components

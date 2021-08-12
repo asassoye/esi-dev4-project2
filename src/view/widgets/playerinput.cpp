@@ -40,11 +40,7 @@ PlayerInput::PlayerInput(unsigned int id, QWidget *parent) : QWidget(parent) {
   layout_->addWidget(age_);
 }
 
-std::string PlayerInput::name() const {
-  return name_->text().toStdString();
-}
+std::string PlayerInput::name() const { return name_->text().toStdString(); }
 
-unsigned PlayerInput::age() const {
-  return age_->value();
-}
-}
+unsigned PlayerInput::age() const { return age_->value(); }
+}  // namespace cpoker::view::widgets

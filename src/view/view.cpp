@@ -20,55 +20,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <memory>
-#include <stdexcept>
-#include <iostream>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsView>
 #include "view.hpp"
+
+#include <QGraphicsPixmapItem>
+#include <memory>
+#include <string>
+
 #include "model/model.hpp"
 
 namespace cpoker::view {
 
-View::View() : status_{model::game::NOT_STARTED} {
+View::View()
+    : status_{model::game::NOT_STARTED},
+      boardWindow_{nullptr},
+      startAction_{nullptr} {
   setWindowTitle("Cockroach Poker");
 
   startWindow_ = new windows::StartWindow{};
   startWindow_->show();
-
 }
 
-void View::update(const std::string_view &propertyName, const utils::Observable *observable) {
-  std::cout << propertyName << std::endl;
-
+void View::update(const std::string_view &propertyName,
+                  const utils::Observable *observable) {
   auto model = dynamic_cast<const model::Model *>(observable);
 
   if (propertyName == "STATUS_UPDATED") {
     status_ = model->status();
+
+    if (status_ == model::game::STARTED) {
+      QVector<QString> players{};
+      for (auto &player : model->players()) {
+        players.push_back(QString::fromStdString(std::string{player}));
+      }
+
+      showBoard(players);
+    }
   }
 }
 
-void View::showBoard() {
-  QGraphicsView gview = QGraphicsView{this};
-  //gview.setScene(&scene);
-
-  gview.setFrameStyle(QFrame::NoFrame);
-  gview.setAlignment(Qt::AlignLeft | Qt::AlignTop);
-  gview.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  gview.show();
+void View::showBoard(const QVector<QString> &players) {
+  boardWindow_ = new windows::BoardWindow{players};
+  boardWindow_->show();
 }
 
-void View::askPlayers() {
-
-}
-
-void View::connectStartAction(std::function<void(std::map<std::string, unsigned> &)> *startAction) {
+void View::connectStartAction(
+    std::function<void(std::map<std::string, unsigned> &)> *startAction) {
   startAction_ = startAction;
-  connect(startWindow_, &windows::StartWindow::confirmed, this, [this, startAction]() {
-    auto players = startWindow_->players();
-    (*startAction)(players);
-    startWindow_->hide();
-  });
+  connect(startWindow_, &windows::StartWindow::confirmed, this,
+          [this, startAction]() {
+            auto players = startWindow_->players();
+            (*startAction)(players);
+            startWindow_->hide();
+          });
 }
 
-}
+void View::status(model::game::GameStatus status) { status_ = status; }
+
+}  // namespace cpoker::view

@@ -28,6 +28,7 @@
 #define COCKROACH_POKER_SRC_MODEL_GAME_PLAYER_HPP_
 
 #include <vector>
+
 #include "model/cards/card.hpp"
 #include "model/cards/cardcollection.hpp"
 
@@ -47,11 +48,11 @@ class Player {
  public:
   Player(std::string_view name, unsigned age) noexcept(false);
 
-  std::string_view &name() noexcept;
+  [[nodiscard]] std::string_view name() const noexcept;
 
   void name(std::string_view &&new_name) noexcept;
 
-  unsigned age() const noexcept;
+  [[nodiscard]] unsigned age() const noexcept;
 
   void age(unsigned new_age) noexcept;
 
@@ -65,6 +66,6 @@ class Player {
 
   cards::Card withdraw(unsigned index);
 };
-}
+}  // namespace cpoker::model::game
 
-#endif //COCKROACH_POKER_SRC_MODEL_GAME_PLAYER_HPP_
+#endif  // COCKROACH_POKER_SRC_MODEL_GAME_PLAYER_HPP_

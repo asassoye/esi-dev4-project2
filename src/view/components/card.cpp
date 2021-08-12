@@ -20,26 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #include "card.hpp"
 
 namespace cpoker::view::components {
 Card::Card(CardType type, QGraphicsItem *parent)
-    : QGraphicsSvgItem{svgFile(type), parent}, type_{type} {
-
-}
+    : QGraphicsSvgItem{svgFile(type), parent}, type_{type} {}
 
 QString Card::svgFile(CardType type) {
   switch (type) {
-    case BAT: return ":/cards/bat.svg";
-    case FLY: return ":/cards/fly.svg";
-    case TOAD: return ":/cards/toad.svg";
-    case RAT: return ":/cards/rat.svg";
-    case SCORPION: return ":/cards/scorpion.svg";
-    case SPIDER: return ":/cards/spider.svg";
-    case STINKBUG: return ":/cards/stinkbug.svg";
+    case BAT:
+      return ":/cards/bat.svg";
+    case FLY:
+      return ":/cards/fly.svg";
+    case TOAD:
+      return ":/cards/toad.svg";
+    case RAT:
+      return ":/cards/rat.svg";
+    case SCORPION:
+      return ":/cards/scorpion.svg";
+    case SPIDER:
+      return ":/cards/spider.svg";
+    case STINKBUG:
+      return ":/cards/stinkbug.svg";
     case COCKROACH:
-    default: return ":/cards/cockroach.svg";
+    default:
+      return ":/cards/cockroach.svg";
   }
 }
-}
+}  // namespace cpoker::view::components

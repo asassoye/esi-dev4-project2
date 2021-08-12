@@ -2401,7 +2401,7 @@ UML_LIMIT_NUM_FIELDS   = 10
 
 # If the DOT_UML_DETAILS tag is set to NO, doxygen will show attributes and
 # methods without types and arguments in the UML graphs. If the DOT_UML_DETAILS
-# tag is set to YES, doxygen will add type and arguments for attributes and
+# tag is set to YES, doxygen will add cardType and arguments for attributes and
 # methods in the UML graphs. If the DOT_UML_DETAILS tag is set to NONE, doxygen
 # will not generate fields with class member information in the UML graphs. The
 # class diagrams will look similar to the default class diagrams but using UML

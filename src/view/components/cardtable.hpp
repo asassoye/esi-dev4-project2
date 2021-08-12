@@ -20,32 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_
 #define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_
 
-#include <QGraphicsItemGroup>
 #include <QGraphicsItem>
-#include <QRectF>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QWidget>
-#include <QVector>
+#include <QGraphicsItemGroup>
 #include <QMap>
-#include "view/components/cardtype.hpp"
+#include <QPainter>
+#include <QRectF>
+#include <QStyleOptionGraphicsItem>
+#include <QVector>
+#include <QWidget>
+
 #include "view/components/card.hpp"
 #include "view/components/cardpile.hpp"
+#include "view/components/cardtype.hpp"
 
 namespace cpoker::view::components {
 class CardTable : public QGraphicsItemGroup {
  protected:
   QMap<CardType, CardPile *> piles_;
+
  public:
-  explicit CardTable(const QMap<CardType, unsigned int> &table, QGraphicsItem *parent = nullptr);
+  explicit CardTable(const QMap<CardType, unsigned int> &table,
+                     QGraphicsItem *parent = nullptr);
   explicit CardTable(QGraphicsItem *parent = nullptr);
   void add(CardType type);
-  void update(QMap<CardType, unsigned> table);
-  QRectF boundingRect() const override;
+  void update(const QMap<CardType, unsigned> &table);
+  [[nodiscard]] QRectF boundingRect() const override;
 };
-}
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_
+}  // namespace cpoker::view::components
+#endif  // COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDTABLE_HPP_

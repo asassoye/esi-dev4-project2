@@ -20,19 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #ifndef COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
 #define COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
 
-#include <QGraphicsItemGroup>
 #include <QGraphicsItem>
-#include <QRectF>
+#include <QGraphicsItemGroup>
 #include <QPainter>
+#include <QRectF>
 #include <QStyleOptionGraphicsItem>
-#include <QWidget>
 #include <QVector>
-#include "view/components/cardtype.hpp"
+#include <QWidget>
+
 #include "view/components/card.hpp"
+#include "view/components/cardtype.hpp"
 
 namespace cpoker::view::components {
 class CardPile : public QGraphicsItemGroup {
@@ -43,12 +43,13 @@ class CardPile : public QGraphicsItemGroup {
 
  public:
   CardPile(CardType type, unsigned nb, QGraphicsItem *parent = nullptr);
-  QRectF boundingRect() const override;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+  [[nodiscard]] QRectF boundingRect() const override;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget) override;
   void addCard();
   void update(unsigned nb);
-  unsigned nb();
-  CardType type();
+  [[nodiscard]] unsigned nb() const;
+  CardType cardType();
 };
-}
-#endif //COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_
+}  // namespace cpoker::view::components
+#endif  // COCKROACH_POKER_SRC_VIEW_COMPONENTS_CARDPILE_HPP_

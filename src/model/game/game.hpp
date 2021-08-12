@@ -20,12 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
-
 #ifndef COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_
 #define COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_
 
 #include <vector>
+
 #include "model/cards/deck.hpp"
 #include "model/game/gamestatus.hpp"
 #include "model/game/player.hpp"
@@ -35,7 +34,6 @@
 namespace cpoker::model::game {
 class Game : public utils::Observable {
  protected:
-
   GameStatus status_;
 
   std::vector<Player> players_;
@@ -60,10 +58,9 @@ class Game : public utils::Observable {
 
   void start() noexcept(false);
 
-  GameStatus status() const;
+  [[nodiscard]] GameStatus status() const;
 
-  void status(const GameStatus status);
-
+  void status(GameStatus status);
 };
-}
-#endif //COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_
+}  // namespace cpoker::model::game
+#endif  // COCKROACH_POKER_SRC_MODEL_GAME_GAME_HPP_

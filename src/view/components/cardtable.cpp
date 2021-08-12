@@ -20,43 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "cardtable.hpp"
 
 #include <iostream>
-#include "cardtable.hpp"
 
 namespace cpoker::view::components {
 
-CardTable::CardTable(const QMap<CardType, unsigned int> &table, QGraphicsItem *parent) : QGraphicsItemGroup{parent},
-                                                                                         piles_{} {
-  for (auto type: CardTypes) {
-    CardPile *card_pile = new CardPile{type, 0, this};
+CardTable::CardTable(const QMap<CardType, unsigned int> &table,
+                     QGraphicsItem *parent)
+    : QGraphicsItemGroup{parent}, piles_{} {
+  for (auto type : CardTypes) {
+    auto *card_pile = new CardPile{type, 0, this};
     double aX = static_cast<unsigned>(type) * (167 + 167.0 / 4);
     double aY = 0;
-    card_pile->setPos(
-        aX,
-        aY);
+    card_pile->setPos(aX, aY);
     addToGroup(card_pile);
     this->piles_.insert(type, card_pile);
   }
 
-  //update(table);
+  // update(table);
 }
 
-CardTable::CardTable(QGraphicsItem *parent) : CardTable(QMap<CardType, unsigned>{}, parent) {}
+CardTable::CardTable(QGraphicsItem *parent)
+    : CardTable(QMap<CardType, unsigned>{}, parent) {}
 
 void CardTable::add(CardType type) {
   CardPile *card_pile = piles_.value(type);
   card_pile->addCard();
 }
 
-void CardTable::update(QMap<CardType, unsigned int> table) {
+void CardTable::update(const QMap<CardType, unsigned int> &table) {
   for (auto &pile : piles_) {
-    pile->update(table.value(pile->type(), 0));
-    std::cout << pile->boundingRect().width() << " " << pile->boundingRect().height() << std::endl;
+    pile->update(table.value(pile->cardType(), 0));
+    std::cout << pile->boundingRect().width() << " "
+              << pile->boundingRect().height() << std::endl;
   }
 }
 
 QRectF CardTable::boundingRect() const {
   return QRectF{0.0, 0.0, 167.0 * 8 + (167.0 / 4) * 8, 387.0};
 }
-}
+}  // namespace cpoker::view::components

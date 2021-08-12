@@ -20,37 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 /**
  * @file deck.cpp
  */
-#include <stdexcept>
-#include <random>
+#include "cardcollection.hpp"
+
 #include <algorithm>
 #include <chrono>
-#include "cardcollection.hpp"
+#include <random>
+#include <stdexcept>
 
 namespace cpoker::model::cards {
 
-CardCollection::CardCollection() noexcept(false):
-    cards_{} {}
+CardCollection::CardCollection() noexcept(false) : cards_{} {}
 
-CardCollection::CardCollection(const std::map<CardType, unsigned int> &cards) noexcept(false): CardCollection() {
+CardCollection::CardCollection(
+    const std::map<CardType, unsigned int> &cards) noexcept(false)
+    : CardCollection() {
   add(cards);
 }
 
-bool CardCollection::empty() noexcept {
-  return cards_.empty();
-}
+bool CardCollection::empty() noexcept { return cards_.empty(); }
 
-bool CardCollection::has(CardType type) noexcept {
-  return has(Card{type});
-}
+bool CardCollection::has(CardType type) noexcept { return has(Card{type}); }
 
 bool CardCollection::has(const Card &c) noexcept {
   for (auto &card : cards_) {
-    if (card == c)
-      return true;
+    if (card == c) return true;
   }
 
   return false;
@@ -59,16 +55,16 @@ bool CardCollection::has(const Card &c) noexcept {
 unsigned CardCollection::count(CardType type) noexcept {
   unsigned count = 0;
 
-  for (auto &card: cards_) {
-    if (card.type() == type)
-      ++count;
+  for (auto &card : cards_) {
+    if (card.type() == type) ++count;
   }
   return count;
 }
 
 Card CardCollection::pop() noexcept(false) {
   if (empty()) {
-    throw std::out_of_range("CardCollection is empty. Impossible to pop a Card.");
+    throw std::out_of_range(
+        "CardCollection is empty. Impossible to pop a Card.");
   }
 
   auto card = cards_.back();
@@ -88,15 +84,14 @@ Card CardCollection::withdraw(unsigned int index) {
   return card;
 }
 
-void CardCollection::add(CardType type) noexcept(false) {
-  add(Card{type});
-}
+void CardCollection::add(CardType type) noexcept(false) { add(Card{type}); }
 
 void CardCollection::add(const Card &card) noexcept(false) {
   cards_.emplace_back(card);
 }
 
-void CardCollection::add(const std::map<CardType, unsigned int> &cards) noexcept(false) {
+void CardCollection::add(
+    const std::map<CardType, unsigned int> &cards) noexcept(false) {
   for (auto &card : cards) {
     for (unsigned i = 0; i < card.second; ++i) {
       add(card.first);
@@ -104,8 +99,6 @@ void CardCollection::add(const std::map<CardType, unsigned int> &cards) noexcept
   }
 }
 
-void CardCollection::clear() noexcept {
-  cards_.clear();
-}
+void CardCollection::clear() noexcept { cards_.clear(); }
 
-}
+}  // namespace cpoker::model::cards

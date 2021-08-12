@@ -20,14 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
-#include <stdexcept>
 #include "boardscene.hpp"
+
+#include <QDebug>
+#include <stdexcept>
+
 #include "view/components/cardtable.hpp"
 
 namespace cpoker::view::scenes {
 
-BoardScene::BoardScene(const QVector<QString> &players) : QGraphicsScene(-5, -5, 800, 800) {
+BoardScene::BoardScene(const QVector<QString> &players)
+    : QGraphicsScene(-5, -5, 800, 800) {
   this->setBackgroundBrush(QBrush{Qt::gray, Qt::Dense2Pattern});
 
   double degrees, radius{250.0};
@@ -45,7 +48,8 @@ BoardScene::BoardScene(const QVector<QString> &players) : QGraphicsScene(-5, -5,
     player->setScale(0.15);
     double width = player->boundingRect().width() * player->scale();
     double height = player->boundingRect().height() * player->scale();
-    player->setPos(radius * std::cos(radian) + 375 - width / 2, radius * std::sin(radian) + 375);
+    player->setPos(radius * std::cos(radian) + 375 - width / 2,
+                   radius * std::sin(radian) + 375);
 
     QTransform transform;
     transform.translate(width / 2, height / 2);
@@ -59,7 +63,9 @@ BoardScene::BoardScene(const QVector<QString> &players) : QGraphicsScene(-5, -5,
   }
 }
 
-void BoardScene::update(const QString &playerName, const QMap<components::CardType, unsigned int> &update) {
+void BoardScene::update(
+    const QString &playerName,
+    const QMap<components::CardType, unsigned int> &update) {
   components::CardTable *player = players_.value(playerName);
 
   if (player == nullptr) {
@@ -68,4 +74,4 @@ void BoardScene::update(const QString &playerName, const QMap<components::CardTy
 
   player->update(update);
 }
-}
+}  // namespace cpoker::view::scenes

@@ -20,17 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #ifndef COCKROACH_POKER_SRC_VIEW_CARD_HPP_
 #define COCKROACH_POKER_SRC_VIEW_CARD_HPP_
 
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsSvgItem>
 #include <QPainter>
-#include <QWidget>
 #include <QRectF>
 #include <QStyleOptionGraphicsItem>
-#include <QGraphicsSvgItem>
+#include <QWidget>
+
 #include "view/components/cardtype.hpp"
 
 namespace cpoker::view::components {
@@ -42,8 +42,8 @@ class Card : public QGraphicsSvgItem {
 
  public:
   explicit Card(CardType type, QGraphicsItem *parent = nullptr);
-  ~Card() = default;
+  ~Card() override = default;
 };
-}
+}  // namespace cpoker::view::components
 
-#endif //COCKROACH_POKER_SRC_VIEW_CARD_HPP_
+#endif  // COCKROACH_POKER_SRC_VIEW_CARD_HPP_

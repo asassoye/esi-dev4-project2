@@ -36,8 +36,8 @@ StartWindow::StartWindow(QWidget *parent) : QWidget(parent) {
   auto *plusmin = new QHBoxLayout{};
   layout_->addLayout(plusmin);
 
-  auto *plus = new QPushButton("+");
-  auto *min = new QPushButton("-");
+  auto *plus = new QPushButton("+", this);
+  auto *min = new QPushButton("-", this);
   plusmin->addWidget(plus);
   plusmin->addWidget(min);
 

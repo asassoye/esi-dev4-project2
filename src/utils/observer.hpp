@@ -28,8 +28,9 @@ class Observable;
 
 class Observer {
  public:
-  virtual void update(const std::string_view &propertyName, const Observable *observable) = 0;
+  virtual void update(const std::string_view &propertyName,
+                      const Observable *observable) = 0;
 };
-}
+}  // namespace cpoker::utils
 
-#endif //COCKROACH_POKER_SRC_UTILS_OBSERVER_HPP_
+#endif  // COCKROACH_POKER_SRC_UTILS_OBSERVER_HPP_

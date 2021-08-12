@@ -23,21 +23,22 @@
 #ifndef COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
 #define COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
 
-#include <model/cards/cardcollection.hpp>
 #include <chrono>
+#include <model/cards/cardcollection.hpp>
 
 namespace cpoker::model::cards {
 class Deck : public CardCollection {
  protected:
-  std::default_random_engine re_{static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count())};
+  std::default_random_engine re_{static_cast<unsigned>(
+      std::chrono::system_clock::now().time_since_epoch().count())};
+
  public:
   Deck() noexcept(false);
 
-  Deck(const std::map<CardType, unsigned int> &) noexcept(false);
+  explicit Deck(const std::map<CardType, unsigned int> &) noexcept(false);
 
   void shuffel() noexcept;
-
 };
-}
+}  // namespace cpoker::model::cards
 
-#endif //COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_
+#endif  // COCKROACH_POKER_SRC_MODEL_CARDS_DECK_HPP_

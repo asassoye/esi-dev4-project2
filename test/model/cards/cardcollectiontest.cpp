@@ -46,15 +46,15 @@ TEST_CASE("class CardCollection") {
     SECTION("CardCollection(std::map<CardType, unsigned int> &)") {
       auto deck = CardCollection(basicDeck);
 
-      for (auto &e: basicDeck) {
+      for (auto &e : basicDeck) {
         CHECK(deck.count(e.first) == e.second);
       }
     }
   }
 
-  SECTION("void CardCollection::addHand(CardType type)") {
+  SECTION("void CardCollection::addHand(CardType cardType)") {
     auto deck = CardCollection();
-    for (auto &e: basicDeck) {
+    for (auto &e : basicDeck) {
       SECTION("CardType: " + std::to_string(e.first)) {
         deck.add(e.first);
 

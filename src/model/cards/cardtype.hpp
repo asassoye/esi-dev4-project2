@@ -64,6 +64,6 @@ enum CardType {
    */
   STINKBUG
 };
-}
+}  // namespace cpoker::model::cards
 
-#endif //COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_
+#endif  // COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_

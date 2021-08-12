@@ -20,11 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #ifndef COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_
 #define COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_
 
 #include <set>
+
 #include "utils/observer.hpp"
 
 namespace cpoker::utils {
@@ -32,8 +32,9 @@ namespace cpoker::utils {
 class Observable {
  protected:
   std::set<Observer *> observers_;
+
  public:
-  //virtual ~Observable() = default;
+  // virtual ~Observable() = default;
 
   virtual void addObserver(Observer *observer) final {
     observers_.insert(observer);
@@ -49,5 +50,5 @@ class Observable {
     }
   }
 };
-}
-#endif //COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_
+}  // namespace cpoker::utils
+#endif  // COCKROACH_POKER_SRC_UTILS_OBSERVABLE_HPP_

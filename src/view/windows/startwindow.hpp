@@ -23,19 +23,20 @@
 #ifndef COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_
 #define COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_
 
-#include <QWidget>
-#include <QVector>
 #include <QMap>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QVector>
+#include <QWidget>
+#include <map>
 #include <string>
 #include <string_view>
-#include <map>
-#include <QVBoxLayout>
-#include <QPushButton>
+
 #include "view/widgets/playerinput.hpp"
 
 namespace cpoker::view::windows {
 class StartWindow : public QWidget {
- Q_OBJECT
+  Q_OBJECT
  protected:
   QVBoxLayout *layout_;
   QVector<widgets::PlayerInput *> players_;
@@ -47,10 +48,11 @@ class StartWindow : public QWidget {
  protected slots:
   void addPlayer();
   void removePlayer();
+
  public:
   explicit StartWindow(QWidget *parent = nullptr);
-  std::map<std::string, unsigned> players() const;
+  [[nodiscard]] std::map<std::string, unsigned> players() const;
 };
-}
+}  // namespace cpoker::view::windows
 
-#endif //COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_
+#endif  // COCKROACH_POKER_SRC_VIEW_WINDOWS_STARTWINDOW_HPP_

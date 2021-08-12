@@ -20,12 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <stdexcept>
 #include "round.hpp"
+
+#include <stdexcept>
 
 namespace cpoker::model::game {
 
-Round::Round() : status_{INIT}, sender_{nullptr}, receiver_{nullptr}, card_{}, value_{} {}
+Round::Round()
+    : status_{INIT}, sender_{nullptr}, receiver_{nullptr}, card_{}, value_{} {}
 
 void Round::start(Player &firstPlayer) noexcept(false) {
   if (status_ != INIT) {
@@ -44,7 +46,8 @@ void Round::reset() noexcept {
   status_ = INIT;
 }
 
-void Round::next(Player &nextSender, const std::optional<cards::Card> &card) noexcept(false) {
+void Round::next(Player &nextSender,
+                 const std::optional<cards::Card> &card) noexcept(false) {
   if (card.has_value()) {
     card_ = card.value_or(cards::Card{cards::COCKROACH});
     status_ = CHOOSING_VALUE;
@@ -148,4 +151,4 @@ Player &Round::looser() noexcept(false) {
   return *sender_;
 }
 
-}
+}  // namespace cpoker::model::game

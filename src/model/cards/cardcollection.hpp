@@ -23,10 +23,11 @@
 #ifndef COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
 #define COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
 
-#include <vector>
 #include <array>
 #include <map>
 #include <random>
+#include <vector>
+
 #include "model/cards/card.hpp"
 
 namespace cpoker::model::cards {
@@ -40,7 +41,8 @@ class CardCollection {
  public:
   CardCollection() noexcept(false);
 
-  explicit CardCollection(const std::map<CardType, unsigned int> &) noexcept(false);
+  explicit CardCollection(const std::map<CardType, unsigned int> &) noexcept(
+      false);
 
   bool empty() noexcept;
 
@@ -62,5 +64,5 @@ class CardCollection {
 
   void clear() noexcept;
 };
-}
-#endif //COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
+}  // namespace cpoker::model::cards
+#endif  // COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_

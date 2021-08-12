@@ -21,16 +21,17 @@
 // SOFTWARE.
 
 #include <QApplication>
+
+#include "controller/controller.hpp"
 #include "model/model.hpp"
 #include "view/view.hpp"
-#include "controller/controller.hpp"
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
 
   cpoker::model::Model model{};
   cpoker::view::View view{};
-  cpoker::controller::Controller{&model, &view};
+  cpoker::controller::Controller controller{&model, &view};
 
   return QApplication::exec();
 }

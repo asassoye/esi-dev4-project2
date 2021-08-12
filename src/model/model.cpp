@@ -21,3 +21,11 @@
 // SOFTWARE.
 
 #include "model.hpp"
+
+std::vector<std::string_view> cpoker::model::Model::players() const {
+  auto result = std::vector<std::string_view>{};
+  for (auto &player : players_) {
+    result.push_back(player.name());
+  }
+  return result;
+}

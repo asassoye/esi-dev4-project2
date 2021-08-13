@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -37,6 +37,7 @@ class Controller {
 
  public:
   std::function<void(std::map<std::string, unsigned> &)> startAction_;
+  std::function<void(model::cards::CardType)> chooseCardAction_;
   Controller(model::Model *model, view::View *view);
 };
 }  // namespace cpoker::controller

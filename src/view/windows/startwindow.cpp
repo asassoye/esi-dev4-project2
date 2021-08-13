@@ -44,6 +44,7 @@ StartWindow::StartWindow(QWidget *parent) : QWidget(parent) {
   confirm_ = new QPushButton{"Nouvelle Partie", this};
   connect(confirm_, &QPushButton::pressed, this, [this]() {
     emit confirmed();
+    hide();
   });
   layout_->addWidget(confirm_);
 

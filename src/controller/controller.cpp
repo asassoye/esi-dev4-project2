@@ -41,6 +41,11 @@ Controller::Controller(model::Model *model, view::View *view)
     model_->start();
   };
 
+  chooseCardAction_ = [this](model::cards::CardType card_type) {
+    model_->chooseCard(card_type);
+  };
+
   view->connectStartAction(&startAction_);
+  view->connectChooseCardAction(&chooseCardAction_);
 }
 }  // namespace cpoker::controller

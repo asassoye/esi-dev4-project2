@@ -33,4 +33,9 @@ std::vector<std::string_view> Model::players() const {
 std::string Model::playingPlayer() const {
   return std::string{round_.playing().name()};
 }
+void Model::chooseCard(model::cards::CardType card_type) {
+  round_.chooseCard(card_type);
+  notify("ROUND_UPDATED");
+}
+game::RoundStatus Model::roundStatus() const { return round_.status(); }
 }  // namespace cpoker::model

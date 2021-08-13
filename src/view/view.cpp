@@ -33,8 +33,10 @@ namespace cpoker::view {
 
 View::View()
     : status_{model::game::NOT_STARTED},
+      round_status_{model::game::INIT},
       boardWindow_{nullptr},
       player_picker_window_{new windows::PlayerPickerWindow{}},
+      card_picker_window_{new windows::CardPickerWindow{}},
       startAction_{nullptr} {
   setWindowTitle("Cockroach Poker");
 
@@ -57,11 +59,27 @@ void View::update(const std::string_view &propertyName,
       }
 
       showBoard(players);
+    }
+  }
 
+  if (propertyName == "ROUND_UPDATED") {
+    round_status_ = model->roundStatus();
+
+    if (round_status_ == model::game::CHOOSING_RECEIVER) {
+      QVector<QString> players{};
+      for (auto &player : model->players()) {
+        players.push_back(QString::fromStdString(std::string{player}));
+      }
       player_picker_window_->players(players);
       player_picker_window_->player(
           QString::fromStdString(model->playingPlayer()));
       player_picker_window_->show();
+    }
+
+    if (round_status_ == model::game::CHOOSING_CARD) {
+      card_picker_window_->player(
+          QString::fromStdString(model->playingPlayer()));
+      card_picker_window_->show();
     }
   }
 }
@@ -83,6 +101,15 @@ void View::connectStartAction(
 
 [[maybe_unused]] void View::status(model::game::GameStatus status) {
   status_ = status;
+}
+void View::connectChooseCardAction(
+    std::function<void(model::cards::CardType)> *chooseCardAction) {
+  chooseCardAction_ = chooseCardAction;
+  connect(
+      card_picker_window_, &windows::CardPickerWindow::choosed, this,
+      [this](components::CardType card_type) {
+        (*chooseCardAction_)(static_cast<model::cards::CardType>(card_type));
+      });
 }
 
 }  // namespace cpoker::view

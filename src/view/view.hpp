@@ -27,10 +27,13 @@
 #include <map>
 #include <string>
 
+#include "model/cards/cardtype.hpp"
 #include "model/game/gamestatus.hpp"
+#include "model/game/roundstatus.hpp"
 #include "utils/observer.hpp"
 #include "view/components/card.hpp"
 #include "view/windows/boardwindow.hpp"
+#include "view/windows/cardpickerwindow.hpp"
 #include "view/windows/playerpickerwindow.hpp"
 #include "view/windows/startwindow.hpp"
 
@@ -39,10 +42,13 @@ class View : public QWidget, public utils::Observer {
   Q_OBJECT
  protected:
   model::game::GameStatus status_;
+  model::game::RoundStatus round_status_;
   windows::StartWindow *startWindow_;
   windows::BoardWindow *boardWindow_;
   windows::PlayerPickerWindow *player_picker_window_;
+  windows::CardPickerWindow *card_picker_window_;
   std::function<void(std::map<std::string, unsigned> &)> *startAction_;
+  std::function<void(model::cards::CardType)> *chooseCardAction_;
   [[maybe_unused]] void status(model::game::GameStatus status);
 
  public:
@@ -52,6 +58,9 @@ class View : public QWidget, public utils::Observer {
   void showBoard(const QVector<QString> &players);
   void connectStartAction(
       std::function<void(std::map<std::string, unsigned> &)> *startAction);
+
+  void connectChooseCardAction(
+      std::function<void(model::cards::CardType)> *chooseCardAction);
 };
 }  // namespace cpoker::view
 #endif  // COCKROACH_POKER_SRC_VIEW_VIEW_HPP_

@@ -27,7 +27,7 @@
 
 #include "model/cards//card.hpp"
 #include "model/game/player.hpp"
-#include "model/game/rountstatus.hpp"
+#include "model/game/roundstatus.hpp"
 
 namespace cpoker::model::game {
 class Round {
@@ -55,6 +55,8 @@ class Round {
 
   void chooseCard(Player &sender, const cards::Card &card);
 
+  void chooseCard(cards::CardType card_type);
+
   void chooseValue(Player &sender, const cards::Card &card);
 
   void chooseReceiver(Player &sender, Player &receiver) noexcept(false);
@@ -66,6 +68,8 @@ class Round {
   Player &looser() noexcept(false);
 
   Player &playing() const;
+
+  RoundStatus status() const;
 };
 }  // namespace cpoker::model::game
 

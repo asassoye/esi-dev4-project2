@@ -79,6 +79,10 @@ void Round::chooseCard(Player &sender, const cards::Card &card) {
   status_ = CHOOSING_VALUE;
 }
 
+void Round::chooseCard(cards::CardType card_type) {
+  chooseCard(*sender_, cards::Card{card_type});
+}
+
 void Round::chooseValue(Player &sender, const cards::Card &card) {
   if (status_ != CHOOSING_VALUE) {
     throw std::logic_error("It's not the moment to choose a value");
@@ -165,5 +169,7 @@ Player &Round::playing() const {
       return *receiver_;
   }
 }
+
+RoundStatus Round::status() const { return status_; }
 
 }  // namespace cpoker::model::game

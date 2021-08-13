@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,6 +25,9 @@
  */
 #ifndef COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_
 #define COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_
+
+#include <array>
+#include <string>
 
 namespace cpoker::view::components {
 /**
@@ -67,6 +70,29 @@ enum CardType {
 
 static constexpr std::array<CardType, 8> CardTypes = {
     BAT, FLY, COCKROACH, TOAD, RAT, SCORPION, SPIDER, STINKBUG};
+
+[[maybe_unused]] static std::string name(CardType card_type) {
+  switch (card_type) {
+    case BAT:
+      return "Chauve-souris";
+    case FLY:
+      return "Mouche";
+    case COCKROACH:
+      return "Cafard";
+    case TOAD:
+      return "Crapaud";
+    case RAT:
+      return "Rat";
+    case SCORPION:
+      return "Scorpion";
+    case SPIDER:
+      return "Araignée";
+    case STINKBUG:
+    default:
+      return "Punaise";
+  }
+}
+
 }  // namespace cpoker::view::components
 
 #endif  // COCKROACH_POKER_SRC_VIEW_CARDTYPE_HPP_

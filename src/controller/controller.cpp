@@ -49,8 +49,13 @@ Controller::Controller(model::Model *model, view::View *view)
     model_->chooseValue(card_type);
   };
 
+  chooseReceiverAction_ = [this](std::string name) {
+    model_->chooseReceiver(name);
+  };
+
   view->connectStartAction(&startAction_);
   view->connectChooseCardAction(&chooseCardAction_);
   view->connectChooseValueAction(&chooseValueAction_);
+  view->connectReceiverAction(&chooseReceiverAction_);
 }
 }  // namespace cpoker::controller

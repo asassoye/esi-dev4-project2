@@ -117,6 +117,10 @@ void Round::chooseReceiver(Player &sender, Player &receiver) noexcept(false) {
   status_ = SEND;
 }
 
+void Round::chooseReceiver(Player &receiver) {
+  chooseReceiver(*sender_, receiver);
+}
+
 void Round::accept(Player &receiver, bool guess) {
   if (status_ != SEND) {
     throw std::logic_error("it's not the moment to guess");

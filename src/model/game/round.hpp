@@ -63,6 +63,8 @@ class Round {
 
   void chooseReceiver(Player &sender, Player &receiver) noexcept(false);
 
+  void chooseReceiver(Player &receiver);
+
   void accept(Player &receiver, bool guess);
 
   void transfer(Player &receiver);

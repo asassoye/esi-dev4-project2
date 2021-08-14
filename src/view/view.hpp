@@ -52,6 +52,7 @@ class View : public QWidget, public utils::Observer {
   std::function<void(std::map<std::string, unsigned> &)> *startAction_;
   std::function<void(model::cards::CardType)> *chooseCardAction_;
   std::function<void(model::cards::CardType)> *chooseValueAction_;
+  std::function<void(std::string)> *chooseReceiverAction_;
   [[maybe_unused]] void status(model::game::GameStatus status);
 
  public:
@@ -67,6 +68,9 @@ class View : public QWidget, public utils::Observer {
 
   void connectChooseValueAction(
       std::function<void(model::cards::CardType)> *chooseCardAction);
+
+  void connectReceiverAction(
+      std::function<void(std::string)> *chooseReceiverAction);
 };
 }  // namespace cpoker::view
 #endif  // COCKROACH_POKER_SRC_VIEW_VIEW_HPP_

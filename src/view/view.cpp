@@ -131,5 +131,13 @@ void View::connectChooseValueAction(
         (*chooseValueAction_)(static_cast<model::cards::CardType>(card_type));
       });
 }
+void View::connectReceiverAction(
+    std::function<void(std::string)> *chooseReceiverAction) {
+  chooseReceiverAction_ = chooseReceiverAction;
+  connect(player_picker_window_, &windows::PlayerPickerWindow::choosed, this,
+          [this](const QString &name) {
+            (*chooseReceiverAction_)(name.toStdString());
+          });
+}
 
 }  // namespace cpoker::view

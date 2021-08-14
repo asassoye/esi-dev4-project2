@@ -42,4 +42,7 @@ void Model::chooseValue(model::cards::CardType card_type) {
   round_.chooseValue(card_type);
   notify("ROUND_UPDATED");
 }
+void Model::chooseReceiver(std::string &name) {
+  round_.chooseReceiver(getPlayer(name));
+}
 }  // namespace cpoker::model

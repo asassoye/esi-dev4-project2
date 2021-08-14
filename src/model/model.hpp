@@ -35,6 +35,7 @@ class Model : public game::Game {
   std::string playingPlayer() const;
   void chooseCard(model::cards::CardType card_type);
   void chooseValue(model::cards::CardType card_type);
+  void chooseReceiver(std::string &name);
   game::RoundStatus roundStatus() const;
 };
 }  // namespace cpoker::model

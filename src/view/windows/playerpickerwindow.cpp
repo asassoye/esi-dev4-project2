@@ -44,6 +44,11 @@ void PlayerPickerWindow::players(const QVector<QString> &players) {
     auto *playerButton = new QPushButton{player, this};
     players_.push_back(playerButton);
     layout_->addWidget(playerButton);
+
+    connect(playerButton, &QPushButton::pressed, this, [this, player]() {
+      emit choosed(player);
+      hide();
+    });
   }
 }
 

@@ -20,24 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <stdexcept>
 #include "game.hpp"
 
+#include <stdexcept>
+
 namespace cpoker::model::game {
-const std::map<cards::CardType, unsigned int> Game::basicDeckMap = {{cards::BAT, 8},
-                                                                    {cards::FLY, 8},
-                                                                    {cards::COCKROACH, 8},
-                                                                    {cards::TOAD, 8},
-                                                                    {cards::RAT, 8},
-                                                                    {cards::SCORPION, 8},
-                                                                    {cards::SPIDER, 8},
-                                                                    {cards::STINKBUG, 8}};
+const std::map<cards::CardType, unsigned int> Game::basicDeckMap = {
+    {cards::BAT, 8},    {cards::FLY, 8},     {cards::COCKROACH, 8},
+    {cards::TOAD, 8},   {cards::RAT, 8},     {cards::SCORPION, 8},
+    {cards::SPIDER, 8}, {cards::STINKBUG, 8}};
 
 Game::Game() : status_{NOT_STARTED} {}
 
 void Game::addPlayer(const std::string_view &name, unsigned int age) {
   if (status_ != NOT_STARTED) {
-    throw std::domain_error("You cannot addHand players when the game is started..");
+    throw std::domain_error(
+        "You cannot addHand players when the game is started..");
   }
 
   if (players_.size() > MAX_PLAYERS) {
@@ -105,9 +103,7 @@ Player &Game::youngestPlayer() noexcept(false) {
   return *youngest;
 }
 
-GameStatus Game::status() const {
-  return status_;
-}
+GameStatus Game::status() const { return status_; }
 
 void Game::status(GameStatus status) {
   status_ = status;
@@ -121,4 +117,14 @@ void Game::addPlayers(const std::map<std::string, unsigned> &players) {
   }
 }
 
+Player &Game::getPlayer(const std::string &name) const {
+  for (const auto &i : players_) {
+    auto &player = const_cast<Player &>(i);
+    if (player.name() == name) {
+      return player;
+    }
+  }
+  throw std::logic_error("no player with this name");
 }
+
+}  // namespace cpoker::model::game

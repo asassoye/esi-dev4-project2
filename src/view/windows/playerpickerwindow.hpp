@@ -38,6 +38,9 @@ class PlayerPickerWindow : public QWidget {
   QLabel *text_;
   void disablePlayer(const QString &name);
 
+ signals:
+  void choosed(const QString &name);
+
  public:
   explicit PlayerPickerWindow(QWidget *parent = nullptr);
   void players(const QVector<QString> &players);

@@ -139,6 +139,7 @@ set(
         src/view/windows/playerpickerwindow.cpp
         src/view/windows/cardpickerwindow.cpp
         src/view/windows/valuepickerwindow.cpp
+        src/view/windows/receiverwindow.cpp
 )
 
 add_library(

@@ -23,12 +23,15 @@
 #ifndef COCKROACH_POKER_SRC_MODEL_MODEL_HPP_
 #define COCKROACH_POKER_SRC_MODEL_MODEL_HPP_
 
+#include <map>
 #include <string>
 #include <vector>
 
 #include "model/game/game.hpp"
 
 namespace cpoker::model {
+typedef std::map<cards::CardType, unsigned> CardMap;
+
 class Model : public game::Game {
  public:
   [[nodiscard]] std::vector<std::string_view> players() const;
@@ -36,7 +39,13 @@ class Model : public game::Game {
   void chooseCard(model::cards::CardType card_type);
   void chooseValue(model::cards::CardType card_type);
   void chooseReceiver(std::string &name);
+  void accept(bool guess);
+  void transfer();
   game::RoundStatus roundStatus() const;
+  model::cards::CardType announcedCard() const;
+  [[nodiscard]] std::vector<
+      std::pair<std::string, std::map<cards::CardType, unsigned>>>
+  board() const;
 };
 }  // namespace cpoker::model
 

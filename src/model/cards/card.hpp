@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -66,14 +66,14 @@ class Card {
    *
    * @return Type of the card
    */
-  constexpr inline CardType type() noexcept;
+  [[nodiscard]] constexpr inline CardType type() const noexcept;
 
   /**
    * @brief name of the card cardType
    *
    * @return Name of the Card
    */
-  constexpr inline std::string_view name() noexcept;
+  [[nodiscard]] constexpr inline std::string_view name() const noexcept;
 
   /**
    * @brief re-affectation operator
@@ -114,9 +114,9 @@ constexpr Card::Card(Card &&card) noexcept : type_{card.type_} {}
 
 constexpr Card::Card(const Card &card) noexcept = default;
 
-constexpr CardType Card::type() noexcept { return type_; }
+constexpr CardType Card::type() const noexcept { return type_; }
 
-constexpr std::string_view Card::name() noexcept {
+constexpr std::string_view Card::name() const noexcept {
   switch (type_) {
     case BAT:
       return "BAT";

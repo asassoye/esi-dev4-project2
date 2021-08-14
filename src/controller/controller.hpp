@@ -40,6 +40,8 @@ class Controller {
   std::function<void(model::cards::CardType)> chooseCardAction_;
   std::function<void(model::cards::CardType)> chooseValueAction_;
   std::function<void(std::string)> chooseReceiverAction_;
+  std::function<void(bool)> acceptAction_;
+  std::function<void()> transferAction_;
   Controller(model::Model *model, view::View *view);
 };
 }  // namespace cpoker::controller

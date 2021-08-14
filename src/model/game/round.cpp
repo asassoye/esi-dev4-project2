@@ -144,6 +144,8 @@ void Round::accept(Player &receiver, bool guess) {
   next(*roundLooser);
 }
 
+void Round::accept(bool guess) { accept(*receiver_, guess); }
+
 void Round::transfer(Player &receiver) {
   if (status_ != SEND) {
     throw std::logic_error("it's not the moment to transfer a card");
@@ -155,6 +157,8 @@ void Round::transfer(Player &receiver) {
 
   next(*receiver_, card_);
 }
+
+void Round::transfer() { transfer(*receiver_); }
 Player &Round::looser() noexcept(false) {
   if (status_ != LOOSED) {
     throw std::logic_error("Game is not finished");
@@ -179,5 +183,6 @@ Player &Round::playing() const {
 }
 
 RoundStatus Round::status() const { return status_; }
+cards::CardType Round::announced() const { return card_->type(); }
 
 }  // namespace cpoker::model::game

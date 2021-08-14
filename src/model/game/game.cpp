@@ -86,10 +86,9 @@ void Game::start() noexcept(false) {
   if (status_ != CARDS_DISTRIBUTED) {
     throw std::logic_error("The game is already started");
   }
-
+  status(STARTED);
   round_.start(youngestPlayer());
   notify("ROUND_UPDATED");
-  status(STARTED);
 }
 
 Player &Game::youngestPlayer() noexcept(false) {

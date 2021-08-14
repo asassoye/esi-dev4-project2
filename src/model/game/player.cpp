@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,7 +22,9 @@
 
 #include "player.hpp"
 
+#include <map>
 #include <stdexcept>
+#include <utility>
 
 namespace cpoker::model::game {
 
@@ -47,9 +49,21 @@ bool Player::hasCardsLeft() noexcept { return !hand_.empty(); }
 
 void Player::addTable(const cards::Card &card) { table_.add(card); }
 
-unsigned Player::countTable(cards::CardType type) { return table_.count(type); }
+unsigned Player::countTable(cards::CardType type) const {
+  return table_.count(type);
+}
 
 cards::Card Player::withdraw(unsigned int index) {
   return hand_.withdraw(index);
+}
+std::map<cards::CardType, unsigned> Player::table() const {
+  auto map = std::map<cards::CardType, unsigned>{};
+
+  for (auto type : cards::CardTypes) {
+    auto pair = std::make_pair(type, countTable(type));
+    map.insert(pair);
+  }
+
+  return map;
 }
 }  // namespace cpoker::model::game

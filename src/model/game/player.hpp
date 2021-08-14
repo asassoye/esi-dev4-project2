@@ -27,6 +27,7 @@
 #ifndef COCKROACH_POKER_SRC_MODEL_GAME_PLAYER_HPP_
 #define COCKROACH_POKER_SRC_MODEL_GAME_PLAYER_HPP_
 
+#include <map>
 #include <vector>
 
 #include "model/cards/card.hpp"
@@ -62,7 +63,9 @@ class Player {
 
   void addTable(const cards::Card &card);
 
-  unsigned countTable(cards::CardType type);
+  unsigned countTable(cards::CardType type) const;
+
+  [[nodiscard]] std::map<cards::CardType, unsigned> table() const;
 
   cards::Card withdraw(unsigned index);
 };

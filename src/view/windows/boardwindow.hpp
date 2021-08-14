@@ -24,8 +24,11 @@
 #define COCKROACH_POKER_SRC_VIEW_WINDOWS_BOARDWINDOW_HPP_
 
 #include <QGraphicsView>
+#include <QMap>
+#include <QString>
 #include <QWidget>
 
+#include "view/components/cardtype.hpp"
 #include "view/scenes/boardscene.hpp"
 
 namespace cpoker::view::windows {
@@ -37,6 +40,9 @@ class BoardWindow : public QGraphicsView {
  public:
   explicit BoardWindow(const QVector<QString> &players,
                        QWidget *parent = nullptr);
+
+  void update(const QString &playerName,
+              const QMap<components::CardType, unsigned> &update);
 };
 }  // namespace cpoker::view::windows
 #endif  // COCKROACH_POKER_SRC_VIEW_WINDOWS_BOARDWINDOW_HPP_

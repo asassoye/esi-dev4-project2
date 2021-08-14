@@ -44,5 +44,29 @@ void Model::chooseValue(model::cards::CardType card_type) {
 }
 void Model::chooseReceiver(std::string &name) {
   round_.chooseReceiver(getPlayer(name));
+  notify("ROUND_UPDATED");
+}
+model::cards::CardType Model::announcedCard() const {
+  return round_.announced();
+}
+void Model::accept(bool guess) {
+  round_.accept(guess);
+  notify("ROUND_UPDATED");
+}
+void Model::transfer() {
+  round_.transfer();
+  notify("ROUND_UPDATED");
+}
+
+std::vector<std::pair<std::string, std::map<cards::CardType, unsigned>>>
+Model::board() const {
+  auto players = std::vector<std::pair<std::string, CardMap>>{};
+
+  for (auto &player : players_) {
+    std::pair<std::string, CardMap> pair{player.name(), player.table()};
+    players.push_back(pair);
+  }
+
+  return players;
 }
 }  // namespace cpoker::model

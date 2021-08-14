@@ -38,9 +38,13 @@ View::View()
       player_picker_window_{new windows::PlayerPickerWindow{}},
       card_picker_window_{new windows::CardPickerWindow{}},
       value_picker_window_{new windows::ValuePickerWindow{}},
+      receiver_window_{new windows::ReceiverWindow{}},
       startAction_{nullptr},
       chooseCardAction_{nullptr},
-      chooseValueAction_{nullptr} {
+      chooseValueAction_{nullptr},
+      chooseReceiverAction_{nullptr},
+      acceptAction_{nullptr},
+      transferAction_{nullptr} {
   setWindowTitle("Cockroach Poker");
 
   startWindow_ = new windows::StartWindow{};
@@ -62,18 +66,16 @@ void View::update(const std::string_view &propertyName,
       }
 
       showBoard(players);
+      player_picker_window_->players(players);
     }
   }
 
   if (propertyName == "ROUND_UPDATED") {
     round_status_ = model->roundStatus();
+    auto board = model->board();
+    updateBoard(board);
 
     if (round_status_ == model::game::CHOOSING_RECEIVER) {
-      QVector<QString> players{};
-      for (auto &player : model->players()) {
-        players.push_back(QString::fromStdString(std::string{player}));
-      }
-      player_picker_window_->players(players);
       player_picker_window_->player(
           QString::fromStdString(model->playingPlayer()));
       player_picker_window_->show();
@@ -89,6 +91,14 @@ void View::update(const std::string_view &propertyName,
       value_picker_window_->player(
           QString::fromStdString(model->playingPlayer()));
       value_picker_window_->show();
+    }
+
+    if (round_status_ == model::game::SEND) {
+      receiver_window_->update(
+          QString::fromStdString(model->playingPlayer()),
+          QString::fromStdString(components::name(
+              static_cast<components::CardType>(model->announcedCard()))));
+      receiver_window_->show();
     }
   }
 }
@@ -138,6 +148,31 @@ void View::connectReceiverAction(
           [this](const QString &name) {
             (*chooseReceiverAction_)(name.toStdString());
           });
+}
+void View::connectAcceptActon(std::function<void(bool)> *acceptAction) {
+  acceptAction_ = acceptAction;
+  connect(receiver_window_, &windows::ReceiverWindow::accept, this,
+          [this](bool guess) { (*acceptAction_)(guess); });
+}
+
+void View::connectTransferAction(std::function<void()> *transferAction) {
+  transferAction_ = transferAction;
+  connect(receiver_window_, &windows::ReceiverWindow::transfer, this,
+          [this]() { (*transferAction_)(); });
+}
+void View::updateBoard(
+    const std::vector<
+        std::pair<std::string, std::map<model::cards::CardType, unsigned int>>>
+        &players) {
+  for (auto &player : players) {
+    QString name = QString::fromStdString(player.first);
+    QMap<components::CardType, unsigned> map{};
+    for (auto item : player.second) {
+      map.insert(static_cast<components::CardType>(item.first), item.second);
+    }
+
+    boardWindow_->update(name, map);
+  }
 }
 
 }  // namespace cpoker::view

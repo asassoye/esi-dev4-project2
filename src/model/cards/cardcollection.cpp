@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -42,9 +42,11 @@ CardCollection::CardCollection(
 
 bool CardCollection::empty() noexcept { return cards_.empty(); }
 
-bool CardCollection::has(CardType type) noexcept { return has(Card{type}); }
+bool CardCollection::has(CardType type) const noexcept {
+  return has(Card{type});
+}
 
-bool CardCollection::has(const Card &c) noexcept {
+bool CardCollection::has(const Card &c) const noexcept {
   for (auto &card : cards_) {
     if (card == c) return true;
   }
@@ -52,7 +54,7 @@ bool CardCollection::has(const Card &c) noexcept {
   return false;
 }
 
-unsigned CardCollection::count(CardType type) noexcept {
+unsigned CardCollection::count(CardType type) const noexcept {
   unsigned count = 0;
 
   for (auto &card : cards_) {

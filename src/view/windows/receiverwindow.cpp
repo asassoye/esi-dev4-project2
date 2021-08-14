@@ -20,21 +20,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "boardwindow.hpp"
+#include "receiverwindow.hpp"
 
 namespace cpoker::view::windows {
 
-BoardWindow::BoardWindow(const QVector<QString> &players, QWidget *parent)
-    : QGraphicsView(parent), boardScene_{new scenes::BoardScene{players}} {
-  setScene(boardScene_);
-  setFrameStyle(QFrame::NoFrame);
-  setAlignment(Qt::AlignLeft | Qt::AlignTop);
-  setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+ReceiverWindow::ReceiverWindow(QWidget *parent)
+    : QWidget{parent},
+      layout_{new QVBoxLayout{}},
+      player_{},
+      card_{},
+      text_{new QLabel{this}},
+      truth_{new QPushButton{this}},
+      lie_{new QPushButton{this}},
+      transfer_{new QPushButton{this}} {
+  setLayout(layout_);
   setAttribute(Qt::WA_DeleteOnClose);
+
+  layout_->addWidget(text_);
+  layout_->addWidget(truth_);
+  layout_->addWidget(lie_);
+  layout_->addWidget(transfer_);
+
+  transfer_->setText("Je transfère la carte");
+
+  connect(truth_, &QPushButton::pressed, this, [this]() {
+    emit accept(true);
+    hide();
+  });
+  connect(lie_, &QPushButton::pressed, this, [this]() {
+    emit accept(false);
+    hide();
+  });
+  connect(transfer_, &QPushButton::pressed, this, [this]() {
+    emit transfer();
+    hide();
+  });
 }
-void BoardWindow::update(
-    const QString &playerName,
-    const QMap<components::CardType, unsigned int> &update) {
-  boardScene_->update(playerName, update);
+
+void ReceiverWindow::update(const QString &player, const QString &card) {
+  text_->setText(
+      QString{"%1, le joueur annonce \"%2!\".\n "
+              "Que décidez vous de faire?"}
+          .arg(player, card));
+
+  truth_->setText(QString{"%1? C'est vrai!"}.arg(card));
+  lie_->setText(QString{"%2...? C'est un mensonge!"}.arg(card));
 }
 }  // namespace cpoker::view::windows

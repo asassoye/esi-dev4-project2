@@ -20,49 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
-#define COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
+#ifndef COCKROACH_POKER_SRC_VIEW_WINDOWS_RECEIVERWINDOW_HPP_
+#define COCKROACH_POKER_SRC_VIEW_WINDOWS_RECEIVERWINDOW_HPP_
+#include <QLabel>
+#include <QPushButton>
+#include <QString>
+#include <QVBoxLayout>
+#include <QWidget>
 
-#include <array>
-#include <map>
-#include <random>
-#include <vector>
+namespace cpoker::view::windows {
+class ReceiverWindow : public QWidget {
+  Q_OBJECT
+ private:
+  QVBoxLayout *layout_;
+  QString player_;
+  QString card_;
+  QLabel *text_;
+  QPushButton *truth_;
+  QPushButton *lie_;
+  QPushButton *transfer_;
 
-#include "model/cards/card.hpp"
-
-namespace cpoker::model::cards {
-/**
- * @brief CardCollection class
- */
-class CardCollection {
- protected:
-  std::vector<Card> cards_;
+ signals:
+  void accept(bool guess);
+  void transfer();
 
  public:
-  CardCollection() noexcept(false);
-
-  explicit CardCollection(const std::map<CardType, unsigned int> &) noexcept(
-      false);
-
-  bool empty() noexcept;
-
-  bool has(CardType) const noexcept;
-
-  bool has(const Card &) const noexcept;
-
-  unsigned count(CardType) const noexcept;
-
-  Card pop() noexcept(false);
-
-  Card withdraw(unsigned index);
-
-  void add(CardType) noexcept(false);
-
-  void add(const Card &) noexcept(false);
-
-  void add(const std::map<CardType, unsigned int> &) noexcept(false);
-
-  void clear() noexcept;
+  explicit ReceiverWindow(QWidget *parent = nullptr);
+  void update(const QString &player, const QString &card);
 };
-}  // namespace cpoker::model::cards
-#endif  // COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_
+}  // namespace cpoker::view::windows
+#endif  // COCKROACH_POKER_SRC_VIEW_WINDOWS_RECEIVERWINDOW_HPP_

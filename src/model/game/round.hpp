@@ -67,13 +67,19 @@ class Round {
 
   void accept(Player &receiver, bool guess);
 
+  void accept(bool guess);
+
   void transfer(Player &receiver);
+
+  void transfer();
 
   Player &looser() noexcept(false);
 
   Player &playing() const;
 
   RoundStatus status() const;
+
+  cards::CardType announced() const;
 };
 }  // namespace cpoker::model::game
 

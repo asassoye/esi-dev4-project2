@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,6 +25,8 @@
  */
 #ifndef COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_
 #define COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_
+
+#include <array>
 
 namespace cpoker::model::cards {
 /**
@@ -64,6 +66,9 @@ enum CardType {
    */
   STINKBUG
 };
+
+static constexpr std::array<CardType, 8> CardTypes = {
+    BAT, FLY, COCKROACH, TOAD, RAT, SCORPION, SPIDER, STINKBUG};
 }  // namespace cpoker::model::cards
 
 #endif  // COCKROACH_POKER_SRC_MODEL_CARDTYPE_HPP_

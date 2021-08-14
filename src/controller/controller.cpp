@@ -53,9 +53,15 @@ Controller::Controller(model::Model *model, view::View *view)
     model_->chooseReceiver(name);
   };
 
+  acceptAction_ = [this](bool guess) { model_->accept(guess); };
+
+  transferAction_ = [this]() { model_->transfer(); };
+
   view->connectStartAction(&startAction_);
   view->connectChooseCardAction(&chooseCardAction_);
   view->connectChooseValueAction(&chooseValueAction_);
   view->connectReceiverAction(&chooseReceiverAction_);
+  view->connectAcceptActon(&acceptAction_);
+  view->connectTransferAction(&transferAction_);
 }
 }  // namespace cpoker::controller

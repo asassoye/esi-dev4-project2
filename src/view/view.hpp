@@ -35,10 +35,12 @@
 #include "view/windows/boardwindow.hpp"
 #include "view/windows/cardpickerwindow.hpp"
 #include "view/windows/playerpickerwindow.hpp"
+#include "view/windows/receiverwindow.hpp"
 #include "view/windows/startwindow.hpp"
 #include "view/windows/valuepickerwindow.hpp"
 
 namespace cpoker::view {
+
 class View : public QWidget, public utils::Observer {
   Q_OBJECT
  protected:
@@ -49,10 +51,13 @@ class View : public QWidget, public utils::Observer {
   windows::PlayerPickerWindow *player_picker_window_;
   windows::CardPickerWindow *card_picker_window_;
   windows::ValuePickerWindow *value_picker_window_;
+  windows::ReceiverWindow *receiver_window_;
   std::function<void(std::map<std::string, unsigned> &)> *startAction_;
   std::function<void(model::cards::CardType)> *chooseCardAction_;
   std::function<void(model::cards::CardType)> *chooseValueAction_;
   std::function<void(std::string)> *chooseReceiverAction_;
+  std::function<void(bool)> *acceptAction_;
+  std::function<void()> *transferAction_;
   [[maybe_unused]] void status(model::game::GameStatus status);
 
  public:
@@ -60,6 +65,10 @@ class View : public QWidget, public utils::Observer {
   void update(const std::string_view &propertyName,
               const utils::Observable *observable) override;
   void showBoard(const QVector<QString> &players);
+  void updateBoard(
+      const std::vector<
+          std::pair<std::string, std::map<model::cards::CardType, unsigned>>>
+          &players);
   void connectStartAction(
       std::function<void(std::map<std::string, unsigned> &)> *startAction);
 
@@ -71,6 +80,10 @@ class View : public QWidget, public utils::Observer {
 
   void connectReceiverAction(
       std::function<void(std::string)> *chooseReceiverAction);
+
+  void connectAcceptActon(std::function<void(bool)> *acceptAction);
+
+  void connectTransferAction(std::function<void()> *transferAction);
 };
 }  // namespace cpoker::view
 #endif  // COCKROACH_POKER_SRC_VIEW_VIEW_HPP_

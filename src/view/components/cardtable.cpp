@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,6 +22,7 @@
 
 #include "cardtable.hpp"
 
+#include <QGraphicsRectItem>
 #include <iostream>
 
 namespace cpoker::view::components {
@@ -29,6 +30,11 @@ namespace cpoker::view::components {
 CardTable::CardTable(const QMap<CardType, unsigned int> &table,
                      QGraphicsItem *parent)
     : QGraphicsItemGroup{parent}, piles_{} {
+  auto *bg = new QGraphicsRectItem{
+      QRectF{0.0, 0.0, 167.0 * 8 + (167.0 / 4) * 8, 387.0}};
+  bg->setBrush(QBrush{Qt::gray, Qt::Dense2Pattern});
+  addToGroup(bg);
+
   for (auto type : CardTypes) {
     auto *card_pile = new CardPile{type, 0, this};
     double aX = static_cast<unsigned>(type) * (167 + 167.0 / 4);
@@ -37,8 +43,6 @@ CardTable::CardTable(const QMap<CardType, unsigned int> &table,
     addToGroup(card_pile);
     this->piles_.insert(type, card_pile);
   }
-
-  // update(table);
 }
 
 CardTable::CardTable(QGraphicsItem *parent)

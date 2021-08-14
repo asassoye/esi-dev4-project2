@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,6 +23,7 @@
 #include "boardscene.hpp"
 
 #include <QDebug>
+#include <QGraphicsTextItem>
 #include <stdexcept>
 
 #include "view/components/cardtable.hpp"
@@ -45,12 +46,14 @@ BoardScene::BoardScene(const QVector<QString> &players)
     double radian = (degrees * (M_PI / 180));
 
     auto *player = new cpoker::view::components::CardTable{};
+    auto *name = new QGraphicsTextItem{playerName};
     player->setScale(0.15);
     double width = player->boundingRect().width() * player->scale();
     double height = player->boundingRect().height() * player->scale();
     player->setPos(radius * std::cos(radian) + 375 - width / 2,
                    radius * std::sin(radian) + 375);
-
+    name->setPos((radius - 100) * std::cos(radian) + 475 - width / 2,
+                 (radius - 100) * std::sin(radian) + 375);
     QTransform transform;
     transform.translate(width / 2, height / 2);
     transform.rotate(degrees - 90);
@@ -59,6 +62,7 @@ BoardScene::BoardScene(const QVector<QString> &players)
     player->setTransform(transform);
     players_.insert(playerName, player);
     this->addItem(player);
+    this->addItem(name);
     i++;
   }
 }

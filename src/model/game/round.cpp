@@ -183,6 +183,6 @@ Player &Round::playing() const {
 }
 
 RoundStatus Round::status() const { return status_; }
-cards::CardType Round::announced() const { return card_->type(); }
+cards::CardType Round::announced() const { return value_->type(); }
 
 }  // namespace cpoker::model::game

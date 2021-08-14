@@ -96,6 +96,10 @@ void Round::chooseValue(Player &sender, const cards::Card &card) {
   status_ = CHOOSING_RECEIVER;
 }
 
+void Round::chooseValue(cards::CardType card_type) {
+  chooseValue(*sender_, cards::Card{card_type});
+}
+
 void Round::chooseReceiver(Player &sender, Player &receiver) noexcept(false) {
   if (status_ != CHOOSING_RECEIVER) {
     throw std::logic_error("it's not the moment to choose a receiver");

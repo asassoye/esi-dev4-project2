@@ -59,6 +59,8 @@ class Round {
 
   void chooseValue(Player &sender, const cards::Card &card);
 
+  void chooseValue(cards::CardType card_type);
+
   void chooseReceiver(Player &sender, Player &receiver) noexcept(false);
 
   void accept(Player &receiver, bool guess);

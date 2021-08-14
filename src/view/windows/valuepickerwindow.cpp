@@ -20,27 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
-#define COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
+#include "valuepickerwindow.hpp"
 
-#include <functional>
-#include <map>
+namespace cpoker::view::windows {
 
-#include "model/model.hpp"
-#include "view//view.hpp"
-
-namespace cpoker::controller {
-class Controller {
- protected:
-  model::Model *model_;
-  view::View *view_;
-
- public:
-  std::function<void(std::map<std::string, unsigned> &)> startAction_;
-  std::function<void(model::cards::CardType)> chooseCardAction_;
-  std::function<void(model::cards::CardType)> chooseValueAction_;
-  Controller(model::Model *model, view::View *view);
-};
-}  // namespace cpoker::controller
-
-#endif  // COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
+ValuePickerWindow::ValuePickerWindow(QWidget *parent)
+    : QWidget{parent},
+      layout_{new QVBoxLayout{this}},
+      player_{},
+      text_{new QLabel{this}} {
+  setLayout(layout_);
+  setAttribute(Qt::WA_DeleteOnClose);
+  layout_->addWidget(text_);
+  initCards();
+}
+void ValuePickerWindow::initCards() {
+  for (auto &type : components::CardTypes) {
+    auto *card =
+        new QPushButton{QString::fromStdString(components::name(type)), this};
+    cards_.insert(type, card);
+    layout_->addWidget(card);
+    connect(card, &QPushButton::pressed, this, [this, type]() {
+      emit choosed(type);
+      hide();
+    });
+  }
+}
+void ValuePickerWindow::player(const QString &player) {
+  player_ = player;
+  text_->setText(
+      QString{"%1, quelle carte voulez vous annoncer?"}.arg(player_));
+}
+}  // namespace cpoker::view::windows

@@ -20,27 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
-#define COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
+#ifndef COCKROACH_POKER_SRC_VIEW_WINDOWS_VALUEPICKERWINDOW_HPP_
+#define COCKROACH_POKER_SRC_VIEW_WINDOWS_VALUEPICKERWINDOW_HPP_
 
-#include <functional>
-#include <map>
+#include <QLabel>
+#include <QMap>
+#include <QPushButton>
+#include <QString>
+#include <QVBoxLayout>
+#include <QWidget>
 
-#include "model/model.hpp"
-#include "view//view.hpp"
+#include "view/components/cardtype.hpp"
 
-namespace cpoker::controller {
-class Controller {
- protected:
-  model::Model *model_;
-  view::View *view_;
+namespace cpoker::view::windows {
+class ValuePickerWindow : public QWidget {
+  Q_OBJECT
+ private:
+  QVBoxLayout *layout_;
+  QString player_;
+  QLabel *text_;
+  QMap<components::CardType, QPushButton *> cards_;
+  void initCards();
+
+ signals:
+  void choosed(components::CardType cardtype);
 
  public:
-  std::function<void(std::map<std::string, unsigned> &)> startAction_;
-  std::function<void(model::cards::CardType)> chooseCardAction_;
-  std::function<void(model::cards::CardType)> chooseValueAction_;
-  Controller(model::Model *model, view::View *view);
+  explicit ValuePickerWindow(QWidget *parent = nullptr);
+  void player(const QString &player);
 };
-}  // namespace cpoker::controller
-
-#endif  // COCKROACH_POKER_SRC_CONTROLLER_CONTROLLER_HPP_
+}  // namespace cpoker::view::windows
+#endif  // COCKROACH_POKER_SRC_VIEW_WINDOWS_VALUEPICKERWINDOW_HPP_

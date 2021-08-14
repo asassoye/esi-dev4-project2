@@ -37,7 +37,10 @@ View::View()
       boardWindow_{nullptr},
       player_picker_window_{new windows::PlayerPickerWindow{}},
       card_picker_window_{new windows::CardPickerWindow{}},
-      startAction_{nullptr} {
+      value_picker_window_{new windows::ValuePickerWindow{}},
+      startAction_{nullptr},
+      chooseCardAction_{nullptr},
+      chooseValueAction_{nullptr} {
   setWindowTitle("Cockroach Poker");
 
   startWindow_ = new windows::StartWindow{};
@@ -81,6 +84,12 @@ void View::update(const std::string_view &propertyName,
           QString::fromStdString(model->playingPlayer()));
       card_picker_window_->show();
     }
+
+    if (round_status_ == model::game::CHOOSING_VALUE) {
+      value_picker_window_->player(
+          QString::fromStdString(model->playingPlayer()));
+      value_picker_window_->show();
+    }
   }
 }
 
@@ -102,6 +111,7 @@ void View::connectStartAction(
 [[maybe_unused]] void View::status(model::game::GameStatus status) {
   status_ = status;
 }
+
 void View::connectChooseCardAction(
     std::function<void(model::cards::CardType)> *chooseCardAction) {
   chooseCardAction_ = chooseCardAction;
@@ -109,6 +119,16 @@ void View::connectChooseCardAction(
       card_picker_window_, &windows::CardPickerWindow::choosed, this,
       [this](components::CardType card_type) {
         (*chooseCardAction_)(static_cast<model::cards::CardType>(card_type));
+      });
+}
+
+void View::connectChooseValueAction(
+    std::function<void(model::cards::CardType)> *chooseCardAction) {
+  chooseValueAction_ = chooseCardAction;
+  connect(
+      value_picker_window_, &windows::ValuePickerWindow::choosed, this,
+      [this](components::CardType card_type) {
+        (*chooseValueAction_)(static_cast<model::cards::CardType>(card_type));
       });
 }
 

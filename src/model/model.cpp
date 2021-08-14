@@ -38,4 +38,8 @@ void Model::chooseCard(model::cards::CardType card_type) {
   notify("ROUND_UPDATED");
 }
 game::RoundStatus Model::roundStatus() const { return round_.status(); }
+void Model::chooseValue(model::cards::CardType card_type) {
+  round_.chooseValue(card_type);
+  notify("ROUND_UPDATED");
+}
 }  // namespace cpoker::model

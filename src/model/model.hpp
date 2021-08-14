@@ -34,6 +34,7 @@ class Model : public game::Game {
   [[nodiscard]] std::vector<std::string_view> players() const;
   std::string playingPlayer() const;
   void chooseCard(model::cards::CardType card_type);
+  void chooseValue(model::cards::CardType card_type);
   game::RoundStatus roundStatus() const;
 };
 }  // namespace cpoker::model

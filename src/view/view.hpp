@@ -36,6 +36,7 @@
 #include "view/windows/cardpickerwindow.hpp"
 #include "view/windows/playerpickerwindow.hpp"
 #include "view/windows/startwindow.hpp"
+#include "view/windows/valuepickerwindow.hpp"
 
 namespace cpoker::view {
 class View : public QWidget, public utils::Observer {
@@ -47,8 +48,10 @@ class View : public QWidget, public utils::Observer {
   windows::BoardWindow *boardWindow_;
   windows::PlayerPickerWindow *player_picker_window_;
   windows::CardPickerWindow *card_picker_window_;
+  windows::ValuePickerWindow *value_picker_window_;
   std::function<void(std::map<std::string, unsigned> &)> *startAction_;
   std::function<void(model::cards::CardType)> *chooseCardAction_;
+  std::function<void(model::cards::CardType)> *chooseValueAction_;
   [[maybe_unused]] void status(model::game::GameStatus status);
 
  public:
@@ -60,6 +63,9 @@ class View : public QWidget, public utils::Observer {
       std::function<void(std::map<std::string, unsigned> &)> *startAction);
 
   void connectChooseCardAction(
+      std::function<void(model::cards::CardType)> *chooseCardAction);
+
+  void connectChooseValueAction(
       std::function<void(model::cards::CardType)> *chooseCardAction);
 };
 }  // namespace cpoker::view

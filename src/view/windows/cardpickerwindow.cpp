@@ -21,8 +21,10 @@
 // SOFTWARE.
 
 #include "view/windows/cardpickerwindow.hpp"
+#include "view/components/card.hpp"
 
 #include <QMapIterator>
+#include <QSizePolicy>
 
 namespace cpoker::view::windows {
 CardPickerWindow::CardPickerWindow(QWidget *parent)
@@ -42,6 +44,7 @@ void CardPickerWindow::cards(
   while (i.hasNext()) {
     i.next();
     QPushButton *card = cards_.value(i.key());
+
     if (i.value() == 0) {
       card->setDisabled(true);
     } else {
@@ -56,6 +59,10 @@ void CardPickerWindow::initCards() {
   for (auto &type : components::CardTypes) {
     auto *card =
         new QPushButton{QString::fromStdString(components::name(type)), this};
+    card->setIcon(QPixmap{components::Card::svgFile(type)});
+    card->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+
     cards_.insert(type, card);
     layout_->addWidget(card);
     connect(card, &QPushButton::pressed, this, [this, type]() {
@@ -67,7 +74,7 @@ void CardPickerWindow::initCards() {
 void CardPickerWindow::player(const QString &player) {
   player_ = player;
   text_->setText(
-      QString{"%1, c'est à vous de jouer.  Les autres, fermez les yeux.. \n "
+      QString{"%1, c'est à vous de jouer.  \n Les autres, fermez les yeux.. \n "
               "Quelle carte voulez-vous choisir?"}
           .arg(player_));
 }

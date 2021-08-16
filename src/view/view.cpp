@@ -32,21 +32,25 @@
 namespace cpoker::view {
 
 View::View()
-    : status_{model::game::NOT_STARTED},
+    : layout_{new QHBoxLayout{}},
+      status_{model::game::NOT_STARTED},
       round_status_{model::game::INIT},
       boardWindow_{nullptr},
-      player_picker_window_{new windows::PlayerPickerWindow{}},
-      card_picker_window_{new windows::CardPickerWindow{}},
-      value_picker_window_{new windows::ValuePickerWindow{}},
-      receiver_window_{new windows::ReceiverWindow{}},
+      player_picker_window_{new windows::PlayerPickerWindow{this}},
+      card_picker_window_{new windows::CardPickerWindow{this}},
+      value_picker_window_{new windows::ValuePickerWindow{this}},
+      receiver_window_{new windows::ReceiverWindow{this}},
       startAction_{nullptr},
       chooseCardAction_{nullptr},
       chooseValueAction_{nullptr},
       chooseReceiverAction_{nullptr},
       acceptAction_{nullptr},
       transferAction_{nullptr} {
+  setLayout(layout_);
   setWindowTitle("Cockroach Poker");
-
+  player_picker_window_->hide();
+  value_picker_window_->hide();
+  receiver_window_->hide();
   startWindow_ = new windows::StartWindow{};
   startWindow_->show();
   connect(startWindow_, &QWidget::destroyed, this, &QWidget::close);
@@ -65,6 +69,7 @@ void View::update(const std::string_view &propertyName,
         players.push_back(QString::fromStdString(std::string{player}));
       }
 
+      this->show();
       showBoard(players);
       player_picker_window_->players(players);
     }
@@ -104,8 +109,24 @@ void View::update(const std::string_view &propertyName,
 }
 
 void View::showBoard(const QVector<QString> &players) {
-  boardWindow_ = new windows::BoardWindow{players};
-  boardWindow_->show();
+  boardWindow_ = new windows::BoardWindow{players, this};
+  boardWindow_->setFixedWidth(700);
+
+  layout_->addWidget(boardWindow_);
+
+  card_picker_window_->setFixedWidth(325);
+  layout_->addWidget(card_picker_window_);
+
+  value_picker_window_->setFixedWidth(325);
+  layout_->addWidget(value_picker_window_);
+
+  player_picker_window_->setFixedWidth(325);
+  layout_->addWidget(player_picker_window_);
+
+  receiver_window_->setFixedWidth(325);
+  layout_->addWidget(receiver_window_);
+  setFixedWidth(1100);
+  show();
 }
 
 void View::connectStartAction(

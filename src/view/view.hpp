@@ -26,6 +26,7 @@
 #include <QWidget>
 #include <map>
 #include <string>
+#include <QHBoxLayout>
 
 #include "model/cards/cardtype.hpp"
 #include "model/game/gamestatus.hpp"
@@ -44,6 +45,7 @@ namespace cpoker::view {
 class View : public QWidget, public utils::Observer {
   Q_OBJECT
  protected:
+  QHBoxLayout *layout_;
   model::game::GameStatus status_;
   model::game::RoundStatus round_status_;
   windows::StartWindow *startWindow_;

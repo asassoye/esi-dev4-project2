@@ -38,11 +38,12 @@ class Card : public QGraphicsSvgItem {
  protected:
   CardType type_;
 
-  static QString svgFile(CardType type);
+
 
  public:
   explicit Card(CardType type, QGraphicsItem *parent = nullptr);
   ~Card() override = default;
+  static QString svgFile(CardType type);
 };
 }  // namespace cpoker::view::components
 

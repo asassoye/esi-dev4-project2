@@ -1,4 +1,4 @@
-.PHONY: clean tree docs
+.PHONY: all debug release test clean tree docs
 
 all: debug release docs
 
@@ -18,4 +18,4 @@ debug:
 	mkdir -p build/debug; cd build/debug; cmake -DCMAKE_BUILD_TYPE=Debug ../../; make
 
 test: debug
-	cd build/Debug; ctest ../..
+	cd build/debug; ctest ../..

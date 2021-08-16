@@ -22,6 +22,8 @@
 
 #include "valuepickerwindow.hpp"
 
+#include <view/components/card.hpp>
+
 namespace cpoker::view::windows {
 
 ValuePickerWindow::ValuePickerWindow(QWidget *parent)
@@ -38,6 +40,8 @@ void ValuePickerWindow::initCards() {
   for (auto &type : components::CardTypes) {
     auto *card =
         new QPushButton{QString::fromStdString(components::name(type)), this};
+    card->setIcon(QPixmap{components::Card::svgFile(type)});
+    card->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     cards_.insert(type, card);
     layout_->addWidget(card);
     connect(card, &QPushButton::pressed, this, [this, type]() {

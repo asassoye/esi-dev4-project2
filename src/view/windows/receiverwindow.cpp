@@ -42,6 +42,10 @@ ReceiverWindow::ReceiverWindow(QWidget *parent)
   layout_->addWidget(transfer_);
 
   transfer_->setText("Je transfère la carte");
+  transfer_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+  truth_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  lie_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   connect(truth_, &QPushButton::pressed, this, [this]() {
     emit accept(true);

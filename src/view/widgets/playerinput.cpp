@@ -30,13 +30,14 @@ PlayerInput::PlayerInput(unsigned int id, QWidget *parent) : QWidget(parent) {
   this->setLayout(layout_);
 
   name_ = new QLineEdit{this};
-
   name_->setText(QString{"Player%1"}.arg(id));
+  name_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   layout_->addWidget(name_);
 
   age_ = new QSpinBox{this};
   age_->setSuffix(" ans");
   age_->setRange(8, 99);
+  age_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   layout_->addWidget(age_);
 }
 

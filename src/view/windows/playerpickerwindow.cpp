@@ -42,6 +42,7 @@ void PlayerPickerWindow::players(const QVector<QString> &players) {
 
   for (auto &player : players) {
     auto *playerButton = new QPushButton{player, this};
+    playerButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     players_.push_back(playerButton);
     layout_->addWidget(playerButton);
 

@@ -50,7 +50,6 @@ View::View()
       transferAction_{nullptr} {
   setLayout(layout_);
   setWindowTitle("Cockroach Poker");
-  setAttribute(Qt::WA_DeleteOnClose);
   player_picker_window_->hide();
   value_picker_window_->hide();
   receiver_window_->hide();

@@ -66,7 +66,7 @@ void Game::distributeCards() {
   }
 
   cards::Deck deck{basicDeckMap};
-  deck.shuffel();
+  deck.shuffle();
 
   unsigned count = 0;
   while (!deck.empty()) {

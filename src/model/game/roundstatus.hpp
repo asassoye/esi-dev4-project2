@@ -25,11 +25,29 @@
 
 namespace cpoker::model::game {
 enum RoundStatus {
+  /**
+   * @brief The round is initialised
+   */
   INIT,
+  /**
+   * The sender has to choose a card
+   */
   CHOOSING_CARD,
+  /**
+   * The sender has to choose a value to announce
+   */
   CHOOSING_VALUE,
+  /**
+   * The sender has to choose a receiver
+   */
   CHOOSING_RECEIVER,
+  /**
+   * The card is send to the receiver. He needs to accept or transfer
+   */
   SEND,
+  /**
+   * The sender loosed the game
+   */
   LOOSED
 };
 }

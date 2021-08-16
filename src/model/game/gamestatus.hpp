@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,7 +24,24 @@
 #define COCKROACH_POKER_SRC_MODEL_GAME_GAMESTATUS_HPP_
 
 namespace cpoker::model::game {
-enum GameStatus { NOT_STARTED, CARDS_DISTRIBUTED, STARTED, GAME_OVER };
+enum GameStatus {
+  /**
+   * @brief The game is not started yet
+   */
+  NOT_STARTED,
+  /**
+   * @brief The cards are distributed but the game is not started
+   */
+  CARDS_DISTRIBUTED,
+  /**
+   * @brief The game is started
+   */
+  STARTED,
+  /**
+   * @brief The game is over
+   */
+  GAME_OVER
+};
 }
 
 #endif  // COCKROACH_POKER_SRC_MODEL_GAME_GAMESTATUS_HPP_

@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -31,14 +31,30 @@
 #include "view/components/cardtable.hpp"
 
 namespace cpoker::view::scenes {
+/**
+ * @brief The BoardScene manage the table of the players
+ */
 class BoardScene : public QGraphicsScene {
   Q_OBJECT
  protected:
+  /**
+   * @brief Map of players
+   */
   QMap<QString, components::CardTable *> players_;
 
  public:
+  /**
+   * @brief default constructor
+   * @param players name of the players
+   */
   explicit BoardScene(const QVector<QString> &players);
 
+  /**
+   * @brief Update the number of cards of a player
+   *
+   * @param playerName The name of the player that need an update
+   * @param update the update map of number of cards by CardType
+   */
   void update(const QString &playerName,
               const QMap<components::CardType, unsigned> &update);
 };

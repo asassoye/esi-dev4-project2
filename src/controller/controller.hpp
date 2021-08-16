@@ -30,18 +30,58 @@
 #include "view//view.hpp"
 
 namespace cpoker::controller {
+/**
+ * @brief Constructor class
+ */
 class Controller {
  protected:
+  /**
+   * @brief The Model
+   */
   model::Model *model_;
+
+  /**
+   * @brief The View
+   */
   view::View *view_;
 
  public:
+  /**
+   * @brief The lambda action for the view to start the game
+   */
   std::function<void(std::map<std::string, unsigned> &)> startAction_;
+
+  /**
+   * @brief The lambda action for the view to choose a card
+   */
   std::function<void(model::cards::CardType)> chooseCardAction_;
+
+  /**
+   * @brief The lambda action for the view to choose a value
+   */
   std::function<void(model::cards::CardType)> chooseValueAction_;
+
+  /**
+   * @brief The lambda action for the view to choose a receiver
+   */
   std::function<void(std::string)> chooseReceiverAction_;
+
+  /**
+   * @brief The lambda action for the view to accept the card
+   */
   std::function<void(bool)> acceptAction_;
+
+  /**
+   * @brief The lambda action for the view to transfer the card
+   */
   std::function<void()> transferAction_;
+
+  /**
+   * @brief The controller constructor
+   *
+   * @param model Pointer to the model
+   * @param view  Pointer to the View
+   */
   Controller(model::Model *model, view::View *view);
 };
 }  // namespace cpoker::controller

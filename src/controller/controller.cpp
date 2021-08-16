@@ -57,11 +57,11 @@ Controller::Controller(model::Model *model, view::View *view)
 
   transferAction_ = [this]() { model_->transfer(); };
 
-  view->connectStartAction(&startAction_);
-  view->connectChooseCardAction(&chooseCardAction_);
-  view->connectChooseValueAction(&chooseValueAction_);
-  view->connectReceiverAction(&chooseReceiverAction_);
-  view->connectAcceptActon(&acceptAction_);
-  view->connectTransferAction(&transferAction_);
+  view_->connectStartAction(&startAction_);
+  view_->connectChooseCardAction(&chooseCardAction_);
+  view_->connectChooseValueAction(&chooseValueAction_);
+  view_->connectReceiverAction(&chooseReceiverAction_);
+  view_->connectAcceptActon(&acceptAction_);
+  view_->connectTransferAction(&transferAction_);
 }
 }  // namespace cpoker::controller

@@ -24,6 +24,8 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QMessageBox>
+#include <QString>
 #include <memory>
 #include <string>
 
@@ -48,12 +50,12 @@ View::View()
       transferAction_{nullptr} {
   setLayout(layout_);
   setWindowTitle("Cockroach Poker");
+  setAttribute(Qt::WA_DeleteOnClose);
   player_picker_window_->hide();
   value_picker_window_->hide();
   receiver_window_->hide();
   startWindow_ = new windows::StartWindow{};
   startWindow_->show();
-  connect(startWindow_, &QWidget::destroyed, this, &QWidget::close);
 }
 
 void View::update(const std::string_view &propertyName,
@@ -112,6 +114,14 @@ void View::update(const std::string_view &propertyName,
               static_cast<components::CardType>(model->announcedCard()))));
       receiver_window_->show();
     }
+
+    if (round_status_ == model::game::LOOSED) {
+      QMessageBox msgBox = QMessageBox{};
+      msgBox.setText(QString{"%1 a perdu la partie"}.arg(
+          QString::fromStdString(model->looser())));
+
+      msgBox.exec();
+    }
   }
 }
 
@@ -142,7 +152,7 @@ void View::connectStartAction(
   connect(startWindow_, &windows::StartWindow::confirmed, this, [this]() {
     auto players = startWindow_->players();
     (*startAction_)(players);
-    startWindow_->hide();
+    startWindow_->close();
   });
 }
 

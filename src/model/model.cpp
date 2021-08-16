@@ -79,4 +79,9 @@ std::map<cards::CardType, unsigned> Model::hand(std::string &name) const {
 
   return {};
 }
+
+std::string Model::looser() const {
+  auto &player = round_.looser();
+  return std::string{player.name()};
+}
 }  // namespace cpoker::model

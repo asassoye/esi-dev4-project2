@@ -73,7 +73,7 @@ class Round {
 
   void transfer();
 
-  Player &looser() noexcept(false);
+  Player &looser() const noexcept(false);
 
   Player &playing() const;
 

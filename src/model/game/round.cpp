@@ -161,7 +161,7 @@ void Round::transfer(Player &receiver) {
 }
 
 void Round::transfer() { transfer(*receiver_); }
-Player &Round::looser() noexcept(false) {
+Player &Round::looser() const noexcept(false) {
   if (status_ != LOOSED) {
     throw std::logic_error("Game is not finished");
   }

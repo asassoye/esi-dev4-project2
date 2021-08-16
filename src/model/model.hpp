@@ -46,6 +46,7 @@ class Model : public game::Game {
   [[nodiscard]] std::vector<
       std::pair<std::string, std::map<cards::CardType, unsigned>>>
   board() const;
+  std::string looser() const;
 
   std::map<cards::CardType, unsigned> hand(std::string &name) const;
 };

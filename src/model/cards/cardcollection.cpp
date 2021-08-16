@@ -112,6 +112,7 @@ void CardCollection::remove(CardType type) {
   for (int i = 0; i < cards_.size(); ++i) {
     if (cards_[i].type() == type) {
       cards_.erase(cards_.begin() + i);
+      return;
     }
   }
 }

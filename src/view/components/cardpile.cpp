@@ -55,7 +55,7 @@ void CardPile::update(unsigned nb) {
     addCard();
   }
 }
-unsigned CardPile::nb() const { return nb_; }
+[[maybe_unused]] unsigned CardPile::nb() const { return nb_; }
 
 CardType CardPile::cardType() { return type_; }
 }  // namespace cpoker::view::components

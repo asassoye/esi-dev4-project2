@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -37,16 +37,49 @@
 #include "view/components/cardtype.hpp"
 
 namespace cpoker::view::components {
+/**
+ * @brief CardTable View class
+ */
 class CardTable : public QGraphicsItemGroup {
  protected:
+  /**
+   * @brief The card stacks
+   */
   QMap<CardType, CardPile *> piles_;
 
  public:
+  /**
+   * @brief Constructor with already cards inside
+   * @param table a map with each number of cards by type
+   * @param parent parent item
+   */
   explicit CardTable(const QMap<CardType, unsigned int> &table,
                      QGraphicsItem *parent = nullptr);
+
+  /**
+   * @brief Constructor with a empty table
+   * @param parent parent item
+   */
   explicit CardTable(QGraphicsItem *parent = nullptr);
+
+  /**
+   * @brief Add a card of a certain type
+   *
+   * @param type Type of the card to add to the table
+   */
   void add(CardType type);
+
+  /**
+   * @brief Update the actual cards on the table
+   *
+   * @param table The map with number of cards by type
+   */
   void update(const QMap<CardType, unsigned> &table);
+
+  /**
+   * @brief Getter of the bounding rectangle
+   * @return QRectF (qt shit)
+   */
   [[nodiscard]] QRectF boundingRect() const override;
 };
 }  // namespace cpoker::view::components

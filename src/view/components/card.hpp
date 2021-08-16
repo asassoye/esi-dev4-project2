@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -34,15 +34,30 @@
 #include "view/components/cardtype.hpp"
 
 namespace cpoker::view::components {
+/**
+ * @brief The view Card class
+ */
 class Card : public QGraphicsSvgItem {
  protected:
+  /**
+   * @brief the type of the card
+   */
   CardType type_;
 
-
-
  public:
+  /**
+   * @brief Default Card constructor
+   *
+   * @param type The type of the card
+   * @param parent The parent GraphicsItem
+   */
   explicit Card(CardType type, QGraphicsItem *parent = nullptr);
-  ~Card() override = default;
+  /**
+   * @brief Method to return the resource link to a given card type
+   *
+   * @param type the type of the card
+   * @return the link to the resource
+   */
   static QString svgFile(CardType type);
 };
 }  // namespace cpoker::view::components

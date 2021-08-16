@@ -68,9 +68,17 @@ enum CardType {
   STINKBUG
 };
 
-static constexpr std::array<CardType, 8> CardTypes = {
+/**
+ * @brief Static function that returns all the possible types of CardType
+ */
+[[maybe_unused]] static constexpr std::array<CardType, 8> CardTypes = {
     BAT, FLY, COCKROACH, TOAD, RAT, SCORPION, SPIDER, STINKBUG};
 
+/**
+ * @brief static function that return a string for a CardType in French
+ * @param card_type The type to get the name
+ * @return The name of the card in french
+ */
 [[maybe_unused]] static std::string name(CardType card_type) {
   switch (card_type) {
     case BAT:

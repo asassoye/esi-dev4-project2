@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -26,6 +26,14 @@
 #include "model/model.hpp"
 #include "view/view.hpp"
 
+/**
+ * The main function of the Application
+ *
+ * @param argc Arg count
+ * @param argv Args strings
+ *
+ * @return 0 if no errors
+ */
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
 

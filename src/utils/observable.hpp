@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,22 +28,40 @@
 #include "utils/observer.hpp"
 
 namespace cpoker::utils {
-
+/**
+ * @brief The observable class
+ */
 class Observable {
  protected:
+  /**
+   * @brief The observers
+   */
   std::set<Observer *> observers_;
 
  public:
-  // virtual ~Observable() = default;
-
+  /**
+   * @brief Add an observer
+   *
+   * @param observer observer to add
+   */
   virtual void addObserver(Observer *observer) final {
     observers_.insert(observer);
   }
 
-  virtual void removeObserver(Observer *observer) final {
+  /**
+   * @brief Remove an observer
+   *
+   * @param observer The observer pointer to remove
+   */
+  [[maybe_unused]] virtual void removeObserver(Observer *observer) final {
     observers_.erase(observer);
   }
 
+  /**
+   * @brief notify a change
+   *
+   * @param propertyName The property that has changed
+   */
   virtual void notify(const std::string_view &propertyName) const final {
     for (auto const &observer : observers_) {
       observer->update(propertyName, this);

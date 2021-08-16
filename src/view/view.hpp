@@ -41,50 +41,158 @@
 #include "view/windows/valuepickerwindow.hpp"
 
 namespace cpoker::view {
-
+/**
+ * @brief THE VIEW class :)
+ */
 class View : public QWidget, public utils::Observer {
   Q_OBJECT
  protected:
+  /**
+   * @brief The layout of the widget
+   */
   QHBoxLayout *layout_;
+  /**
+   * @brief The status of the game
+   */
   model::game::GameStatus status_;
+
+  /**
+   * @brief the status of the round
+   */
   model::game::RoundStatus round_status_;
+
+  /**
+   * @brief The start window
+   */
   windows::StartWindow *startWindow_;
+
+  /**
+   * @brief The boardWindow
+   */
   windows::BoardWindow *boardWindow_;
+
+  /**
+   * @brief the player chooser window
+   */
   windows::PlayerPickerWindow *player_picker_window_;
+
+  /**
+   * @brief The card picker window
+   */
   windows::CardPickerWindow *card_picker_window_;
+
+  /**
+   * @brief The value picker window
+   */
   windows::ValuePickerWindow *value_picker_window_;
+
+  /**
+   * @brief The Receiver Window
+   */
   windows::ReceiverWindow *receiver_window_;
+
+  /**
+   * @brief The lambda start action
+   */
   std::function<void(std::map<std::string, unsigned> &)> *startAction_;
+
+  /**
+   * @brief The lambda choose card action
+   */
   std::function<void(model::cards::CardType)> *chooseCardAction_;
+
+  /**
+   * @brief The lambda choose value action
+   */
   std::function<void(model::cards::CardType)> *chooseValueAction_;
+
+  /**
+   * @brief The lambda choose receiver action
+   */
   std::function<void(std::string)> *chooseReceiverAction_;
+
+  /**
+   * @brief The lambda accept action
+   */
   std::function<void(bool)> *acceptAction_;
+
+  /**
+   * @brief The lambda transfer action
+   */
   std::function<void()> *transferAction_;
+
+  /**
+   * @brief change the status of the game
+   */
   [[maybe_unused]] void status(model::game::GameStatus status);
 
  public:
+  /**
+   * @brief The default View constructor
+   */
   View();
+
+  /**
+   * @inherit
+   */
   void update(const std::string_view &propertyName,
               const utils::Observable *observable) override;
+
+  /**
+   * @brief Show the board
+   *
+   * @param players Name of the players
+   */
   void showBoard(const QVector<QString> &players);
+
+  /**
+   * @brief Update the board information
+   * @param players players information mess
+   */
   void updateBoard(
       const std::vector<
           std::pair<std::string, std::map<model::cards::CardType, unsigned>>>
           &players);
+
+  /**
+   * @brief connector for the startAction
+   * @param startAction the lambda
+   */
   void connectStartAction(
       std::function<void(std::map<std::string, unsigned> &)> *startAction);
 
+  /**
+   * @brief connector for the chooseCardAction
+   * @param chooseCardAction the lambda
+   */
   void connectChooseCardAction(
       std::function<void(model::cards::CardType)> *chooseCardAction);
 
+  /**
+   * @brief The connector for the ChooseValueAction
+   * @param chooseCardAction the lambda
+   */
   void connectChooseValueAction(
       std::function<void(model::cards::CardType)> *chooseCardAction);
 
+  /**
+   * @brief Connector for the receiverAction
+   * @param chooseReceiverAction the lambda
+   */
   void connectReceiverAction(
       std::function<void(std::string)> *chooseReceiverAction);
 
+  /**
+   * @brief Connector for the acceptAction
+   * @param acceptAction the lambda
+   */
   void connectAcceptActon(std::function<void(bool)> *acceptAction);
 
+  /**
+   * @brief Connector for the transferAction
+   *
+   * @param transferAction the lambda
+   */
   void connectTransferAction(std::function<void()> *transferAction);
 };
 }  // namespace cpoker::view

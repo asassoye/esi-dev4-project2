@@ -103,4 +103,17 @@ void CardCollection::add(
 
 void CardCollection::clear() noexcept { cards_.clear(); }
 
+void CardCollection::remove(CardType type) {
+  if (empty()) {
+    throw std::out_of_range(
+        "CardCollection is empty. Impossible to pop a Card.");
+  }
+
+  for (int i = 0; i < cards_.size(); ++i) {
+    if (cards_[i].type() == type) {
+      cards_.erase(cards_.begin() + i);
+    }
+  }
+}
+
 }  // namespace cpoker::model::cards

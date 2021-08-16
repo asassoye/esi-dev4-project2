@@ -75,6 +75,8 @@ void Round::chooseCard(Player &sender, const cards::Card &card) {
     return;
   }
 
+  sender_->remove(card.type());
+
   card_ = card;
   status_ = CHOOSING_VALUE;
 }

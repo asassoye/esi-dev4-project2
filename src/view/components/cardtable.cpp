@@ -56,8 +56,6 @@ void CardTable::add(CardType type) {
 void CardTable::update(const QMap<CardType, unsigned int> &table) {
   for (auto &pile : piles_) {
     pile->update(table.value(pile->cardType(), 0));
-    std::cout << pile->boundingRect().width() << " "
-              << pile->boundingRect().height() << std::endl;
   }
 }
 

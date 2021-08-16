@@ -64,8 +64,11 @@ class Player {
   void addTable(const cards::Card &card);
 
   unsigned countTable(cards::CardType type) const;
+  unsigned countHand(cards::CardType type) const;
+  void remove(cards::CardType type);
 
   [[nodiscard]] std::map<cards::CardType, unsigned> table() const;
+  [[nodiscard]] std::map<cards::CardType, unsigned> hand() const;
 
   cards::Card withdraw(unsigned index);
 };

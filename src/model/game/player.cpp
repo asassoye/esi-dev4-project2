@@ -53,6 +53,10 @@ unsigned Player::countTable(cards::CardType type) const {
   return table_.count(type);
 }
 
+unsigned Player::countHand(cards::CardType type) const {
+  return hand_.count(type);
+}
+
 cards::Card Player::withdraw(unsigned int index) {
   return hand_.withdraw(index);
 }
@@ -66,4 +70,16 @@ std::map<cards::CardType, unsigned> Player::table() const {
 
   return map;
 }
+std::map<cards::CardType, unsigned> Player::hand() const {
+  auto map = std::map<cards::CardType, unsigned>{};
+
+  for (auto type : cards::CardTypes) {
+    auto pair = std::make_pair(type, countHand(type));
+    map.insert(pair);
+  }
+
+  return map;
+}
+void Player::remove(cards::CardType type) { hand_.remove(type); }
+
 }  // namespace cpoker::model::game

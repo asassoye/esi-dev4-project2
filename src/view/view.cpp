@@ -89,6 +89,13 @@ void View::update(const std::string_view &propertyName,
     if (round_status_ == model::game::CHOOSING_CARD) {
       card_picker_window_->player(
           QString::fromStdString(model->playingPlayer()));
+
+      std::string name = model->playingPlayer();
+      auto map = QMap<components::CardType, unsigned>{};
+      for (auto &item : model->hand(name)) {
+        map.insert(static_cast<components::CardType>(item.first), item.second);
+      }
+      card_picker_window_->cards(map);
       card_picker_window_->show();
     }
 

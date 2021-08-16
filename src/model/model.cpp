@@ -69,4 +69,14 @@ Model::board() const {
 
   return players;
 }
+
+std::map<cards::CardType, unsigned> Model::hand(std::string &name) const {
+  for (auto &player : players_) {
+    if (player.name() == name) {
+      return player.hand();
+    }
+  }
+
+  return {};
+}
 }  // namespace cpoker::model

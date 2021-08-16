@@ -62,6 +62,8 @@ class CardCollection {
 
   void add(const std::map<CardType, unsigned int> &) noexcept(false);
 
+  void remove(CardType);
+
   void clear() noexcept;
 };
 }  // namespace cpoker::model::cards

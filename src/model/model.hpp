@@ -35,17 +35,19 @@ typedef std::map<cards::CardType, unsigned> CardMap;
 class Model : public game::Game {
  public:
   [[nodiscard]] std::vector<std::string_view> players() const;
-  std::string playingPlayer() const;
+  [[nodiscard]] std::string playingPlayer() const;
   void chooseCard(model::cards::CardType card_type);
   void chooseValue(model::cards::CardType card_type);
   void chooseReceiver(std::string &name);
   void accept(bool guess);
   void transfer();
-  game::RoundStatus roundStatus() const;
-  model::cards::CardType announcedCard() const;
+  [[nodiscard]] game::RoundStatus roundStatus() const;
+  [[nodiscard]] model::cards::CardType announcedCard() const;
   [[nodiscard]] std::vector<
       std::pair<std::string, std::map<cards::CardType, unsigned>>>
   board() const;
+
+  std::map<cards::CardType, unsigned> hand(std::string &name) const;
 };
 }  // namespace cpoker::model
 

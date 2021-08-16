@@ -32,39 +32,109 @@
 
 namespace cpoker::model::cards {
 /**
- * @brief CardCollection class
+ * @brief The CardCollection card is a class to manage multiple cards that are
+ * grouped (in a deck for example or in a hand of a player, ....)
  */
 class CardCollection {
  protected:
+  /**
+   * @brief Vector of cards
+   */
   std::vector<Card> cards_;
 
  public:
+  /**
+   * @brief Constructor empty
+   */
   CardCollection() noexcept(false);
 
-  explicit CardCollection(const std::map<CardType, unsigned int> &) noexcept(
+  /**
+   * @brief Constructor with a set of cards
+   *
+   * @param map Map with number of cards to add by type
+   */
+  explicit CardCollection(const std::map<CardType, unsigned int> &map) noexcept(
       false);
 
+  /**
+   * @brief check if the collection is empty
+   *
+   * @return
+   */
   bool empty() noexcept;
 
-  bool has(CardType) const noexcept;
+  /**
+   * @brief Check if the collection contains a certain type of card
+   *
+   * @return true if the card is present
+   * @return false if the card is absent
+   */
+  [[nodiscard]] bool has(CardType) const noexcept;
 
-  bool has(const Card &) const noexcept;
+  /**
+   * @brief Check if a certain card is present
+   *
+   * @return true if the card is present
+   * @return false if the card is not present
+   */
+  [[nodiscard]] bool has(const Card &) const noexcept;
 
-  unsigned count(CardType) const noexcept;
+  /**
+   * @brief Count the number of cards with the given type is present in
+   * collection
+   *
+   * @param type CardType to count
+   * @return the number of cards with the given type
+   */
+  [[nodiscard]] unsigned count(CardType type) const noexcept;
 
+  /**
+   *
+   * @return
+   */
   Card pop() noexcept(false);
 
+  /**
+   * @brief Withdraw a card with a given index in the collection
+   *
+   * @param index index of the card to withdraw
+   * @return the withdrew card
+   */
   Card withdraw(unsigned index);
 
-  void add(CardType) noexcept(false);
+  /**
+   * @brief Add a card of a certain type
+   *
+   * @param type the type of the card to add
+   */
+  void add(CardType type) noexcept(false);
 
-  void add(const Card &) noexcept(false);
+  /**
+   * @brief Add a card to the collection
+   *
+   * @param card the card to add
+   */
+  void add(const Card &card) noexcept(false);
 
-  void add(const std::map<CardType, unsigned int> &) noexcept(false);
+  /**
+   * @brief Add multiple cards to the collection
+   *
+   * @param map The map of how many cards per type it is needed to add to the
+   * collection
+   */
+  void add(const std::map<CardType, unsigned int> &map) noexcept(false);
 
-  void remove(CardType);
+  /**
+   * @brief Remove a card of a certain type
+   *
+   * @param type The type of one card that you want to delete
+   */
+  void remove(CardType type);
 
-  void clear() noexcept;
+  /**
+   * @brief empty the collection
+   */
+  [[maybe_unused]] void clear() noexcept;
 };
 }  // namespace cpoker::model::cards
 #endif  // COCKROACH_POKER_SRC_MODEL_CARDS_CARDCOLLECTION_HPP_

@@ -67,7 +67,10 @@ enum CardType {
   STINKBUG
 };
 
-static constexpr std::array<CardType, 8> CardTypes = {
+/**
+ * @brief static method that returns an array with all the type in CardType
+ */
+[[maybe_unused]] static constexpr std::array<CardType, 8> CardTypes = {
     BAT, FLY, COCKROACH, TOAD, RAT, SCORPION, SPIDER, STINKBUG};
 }  // namespace cpoker::model::cards
 

@@ -9,8 +9,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -27,17 +27,35 @@
 #include <model/cards/cardcollection.hpp>
 
 namespace cpoker::model::cards {
+/**
+ * @brief The Deck class is an extension of CardCollection to permit to shuffle
+ * the cards
+ */
 class Deck : public CardCollection {
  protected:
+  /**
+   * @brief Random engine to shuffle the cards
+   */
   std::default_random_engine re_{static_cast<unsigned>(
       std::chrono::system_clock::now().time_since_epoch().count())};
 
  public:
+  /**
+   * @brief default constructor of a deck
+   */
   Deck() noexcept(false);
 
-  explicit Deck(const std::map<CardType, unsigned int> &) noexcept(false);
+  /**
+   * @brief Constructor to immediately add the required cards
+   *
+   * @param map the map that gives the number of cards to add by CardType
+   */
+  explicit Deck(const std::map<CardType, unsigned int> &map) noexcept(false);
 
-  void shuffel() noexcept;
+  /**
+   * @brief Shuffle the deck
+   */
+  void shuffle() noexcept;
 };
 }  // namespace cpoker::model::cards
 

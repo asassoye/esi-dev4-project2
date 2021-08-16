@@ -25,9 +25,6 @@
  */
 #include "cardcollection.hpp"
 
-#include <algorithm>
-#include <chrono>
-#include <random>
 #include <stdexcept>
 
 namespace cpoker::model::cards {
@@ -101,7 +98,7 @@ void CardCollection::add(
   }
 }
 
-void CardCollection::clear() noexcept { cards_.clear(); }
+[[maybe_unused]] void CardCollection::clear() noexcept { cards_.clear(); }
 
 void CardCollection::remove(CardType type) {
   if (empty()) {

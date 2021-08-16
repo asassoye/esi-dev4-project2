@@ -33,20 +33,56 @@
 #include "view/components/cardtype.hpp"
 
 namespace cpoker::view::windows {
+/**
+ * @brief The ValuePickerWindow is used to choose a value to announce (by lying
+ * or by saying the truth)
+ */
 class ValuePickerWindow : public QWidget {
   Q_OBJECT
  private:
+  /**
+   * @brief The layout of the widget
+   */
   QVBoxLayout *layout_;
+
+  /**
+   * @brief The name of the playing player
+   */
   QString player_;
+
+  /**
+   * @brief The text of the info about the action
+   */
   QLabel *text_;
+
+  /**
+   * @brief Buttons to choose a value
+   */
   QMap<components::CardType, QPushButton *> cards_;
+
+  /**
+   * @brief init the cards in the map
+   */
   void initCards();
 
  signals:
+  /**
+   * @brief signal for choose a card
+   * @param cardtype the type of the card that is used
+   */
   void choosed(components::CardType cardtype);
 
  public:
+  /**
+   * @brief Default constructor
+   * @param parent the parent widget
+   */
   explicit ValuePickerWindow(QWidget *parent = nullptr);
+
+  /**
+   * @brief update the playing player name
+   * @param player The player name
+   */
   void player(const QString &player);
 };
 }  // namespace cpoker::view::windows

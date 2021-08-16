@@ -35,24 +35,67 @@
 #include "view/widgets/playerinput.hpp"
 
 namespace cpoker::view::windows {
+/**
+ * @brief The start window where is asked for player names and ages
+ */
 class StartWindow : public QWidget {
   Q_OBJECT
  protected:
+  /**
+   * @brief The layout of the widget
+   */
   QVBoxLayout *layout_;
+
+  /**
+   * @brief The players inputs (2 to 6)
+   */
   QVector<widgets::PlayerInput *> players_;
+
+  /**
+   * @brief add a new player button
+   */
   QPushButton *plus_;
+
+  /**
+   * @brief Removes a player button
+   */
   QPushButton *min_;
+
+  /**
+   * @brief confirm and begin the game button
+   */
   QPushButton *confirm_;
 
  signals:
+  /**
+   * @brief the confirmed signal
+   */
   void confirmed();
 
  protected slots:
+  /**
+   * @brief slot to add a player in the list
+   */
   void addPlayer();
+
+  /**
+   * @brief slot to remove the last player in the list
+   */
   void removePlayer();
 
  public:
+  /**
+   * @brief default constructor
+   *
+   * @param parent parent widget
+   */
   explicit StartWindow(QWidget *parent = nullptr);
+
+  /**
+   * @brief get all players names and ages
+   *
+   * @return player names and ages in a map
+   */
   [[nodiscard]] std::map<std::string, unsigned> players() const;
 };
 }  // namespace cpoker::view::windows

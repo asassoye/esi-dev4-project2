@@ -32,21 +32,62 @@
 #include "view/components/cardtype.hpp"
 
 namespace cpoker::view::windows {
+/**
+ * @brief CardPickerWindow class
+ */
 class CardPickerWindow : public QWidget {
   Q_OBJECT
  private:
+  /**
+   * @brief Cards buttons
+   */
   QMap<components::CardType, QPushButton *> cards_;
+
+  /**
+   * @brief Actual player name
+   */
   QString player_;
+
+  /**
+   * @brief widget Layout
+   */
   QVBoxLayout *layout_;
+
+  /**
+   * @brief Text to display with info about the action to take
+   */
   QLabel *text_;
+
+  /**
+   * @brief init all the cards of the widget
+   */
   void initCards();
 
  signals:
+  /**
+   * @brief chosen signal when the player chooses a card
+   */
   void choosed(components::CardType);
 
  public:
+  /**
+   * @brief Default constructor
+   *
+   * @param parent parent widget
+   */
   explicit CardPickerWindow(QWidget *parent = nullptr);
+
+  /**
+   * @brief update the cards available in hand
+   *
+   * @param cards Cards in the hand of actual player
+   */
   void cards(const QMap<components::CardType, unsigned> &cards);
+
+  /**
+   * @brief update the actual playing player name
+   * @param player the name of the playing person
+   */
   void player(const QString &player);
 };
 }  // namespace cpoker::view::windows

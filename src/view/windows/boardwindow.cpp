@@ -24,7 +24,8 @@
 
 namespace cpoker::view::windows {
 
-BoardWindow::BoardWindow(const QVector<QString> &players, QWidget *parent)
+[[maybe_unused]] BoardWindow::BoardWindow(const QVector<QString> &players,
+                                          QWidget *parent)
     : QGraphicsView(parent), boardScene_{new scenes::BoardScene{players}} {
   setScene(boardScene_);
   setFrameStyle(QFrame::NoFrame);

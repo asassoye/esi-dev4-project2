@@ -35,12 +35,27 @@ namespace cpoker::view::windows {
 class BoardWindow : public QGraphicsView {
   Q_OBJECT
  protected:
+  /**
+   * @brief The Scene of the widget
+   */
   scenes::BoardScene *boardScene_;
 
  public:
-  explicit BoardWindow(const QVector<QString> &players,
-                       QWidget *parent = nullptr);
+  /**
+   * @brief The Default constructor
+   *
+   * @param players Player names
+   * @param parent Parent widget
+   */
+  [[maybe_unused]] explicit BoardWindow(const QVector<QString> &players,
+                                        QWidget *parent = nullptr);
 
+  /**
+   * @brief Update the player tables
+   *
+   * @param playerName Player to update
+   * @param update the update MAP
+   */
   void update(const QString &playerName,
               const QMap<components::CardType, unsigned> &update);
 };

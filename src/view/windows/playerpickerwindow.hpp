@@ -29,21 +29,64 @@
 #include <QWidget>
 
 namespace cpoker::view::windows {
+/**
+ * @brief Player Picker Window to choose a receiver in the actual round
+ */
 class PlayerPickerWindow : public QWidget {
   Q_OBJECT
  private:
+  /**
+   * @brief Available players
+   */
   QVector<QPushButton *> players_;
+
+  /**
+   * @brief Actual player name
+   */
   QString player_;
+
+  /**
+   * @brief Widget Layout
+   */
   QVBoxLayout *layout_;
+
+  /**
+   * @brief Text with info about the action
+   */
   QLabel *text_;
+
+  /**
+   * @brief Disable the playing player (to not permit to choose himself)
+   * @param name Name of the actual player
+   */
   void disablePlayer(const QString &name);
 
  signals:
+  /**
+   * @brief Chosen signal when a player is clicked
+   * @param name Name of the chosen player
+   */
   void choosed(const QString &name);
 
  public:
+  /**
+   * @brief Default constructor
+   *
+   * @param parent parent widget
+   */
   explicit PlayerPickerWindow(QWidget *parent = nullptr);
+
+  /**
+   * @brief Update the available players
+   *
+   * @param players Vector of player names
+   */
   void players(const QVector<QString> &players);
+
+  /**
+   * @brief Update the actual playing player
+   * @param player name of the player
+   */
   void player(const QString &player);
 };
 }  // namespace cpoker::view::windows

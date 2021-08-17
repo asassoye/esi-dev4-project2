@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(QT_VERSION 6)
 set(REQUIRED_LIBS Core Widgets SvgWidgets)
-set(REQUIRED_LIBS_QUALIFIED Qt6::Core Qt6::SvgWidgets)
+set(REQUIRED_LIBS_QUALIFIED Qt6::Core Qt6::Widgets Qt6::SvgWidgets)
 
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
@@ -16,7 +16,7 @@ set(CMAKE_AUTORCC ON)
 set(TEST_MAIN test/maintest.cpp)
 
 if (NOT WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic-errors -Wall")
 endif ()
 
 include_directories(src)
